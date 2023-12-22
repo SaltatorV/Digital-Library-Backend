@@ -9,5 +9,7 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
+    <groupId>com.digilib.common.domain</groupId>
     <artifactId>Common-Domain</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
 </project>
