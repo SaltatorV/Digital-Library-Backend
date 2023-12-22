@@ -18,6 +18,7 @@
         <module>Item-Server-Service</module>
         <module>Item-Server-Domain</module>
         <module>Item-Server-Dataaccess</module>
+        <module>Item-Server-Container</module>
     </modules>
 
 </project>
