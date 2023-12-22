@@ -9,5 +9,8 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
+    <groupId>com.digilib.common.application</groupId>
     <artifactId>Common-Application</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+
 </project>
