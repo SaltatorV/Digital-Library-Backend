@@ -4,17 +4,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.digilib</groupId>
-        <artifactId>Digital-Library-Backend</artifactId>
+        <groupId>com.digilib.item.server</groupId>
+        <artifactId>Item-Server</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <groupId>com.digilib.item.server</groupId>
-    <artifactId>Item-Server</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>Item-Server-Application</module>
-        <module>Item-Server-Service</module>
-    </modules>
+    <groupId>com.digilib.item.server.service</groupId>
+    <artifactId>Item-Server-Service</artifactId>
 
 </project>
