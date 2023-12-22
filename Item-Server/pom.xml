@@ -12,9 +12,11 @@
     <groupId>com.digilib.item.server</groupId>
     <artifactId>Item-Server</artifactId>
     <packaging>pom</packaging>
+
     <modules>
         <module>Item-Server-Application</module>
         <module>Item-Server-Service</module>
+        <module>Item-Server-Domain</module>
     </modules>
 
 </project>
