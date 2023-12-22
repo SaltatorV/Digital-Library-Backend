@@ -17,6 +17,7 @@
         <module>Item-Server-Application</module>
         <module>Item-Server-Service</module>
         <module>Item-Server-Domain</module>
+        <module>Item-Server-Dataaccess</module>
     </modules>
 
 </project>
