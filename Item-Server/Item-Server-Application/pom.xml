@@ -9,5 +9,6 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
+    <groupId>com.digilib.item.server.application</groupId>
     <artifactId>Item-Server-Application</artifactId>
 </project>
