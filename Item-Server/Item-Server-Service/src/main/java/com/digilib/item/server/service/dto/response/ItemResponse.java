@@ -10,4 +10,8 @@ public class ItemResponse {
     public static  ItemResponse create(String ISBN) {
         return new ItemResponse(ISBN);
     }
+
+    public String getISBN() {
+        return ISBN;
+    }
 }
