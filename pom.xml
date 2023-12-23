@@ -45,7 +45,7 @@
                 <version>${item.server-version}</version>
             </dependency>
             <dependency>
-                <groupId>com.digilib.item.server.application</groupId>
+                <groupId>com.digilib.item.server.service</groupId>
                 <artifactId>Item-Server-Service</artifactId>
                 <version>${item.server-version}</version>
             </dependency>
