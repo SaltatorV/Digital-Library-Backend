@@ -17,5 +17,9 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.digilib.item.server.service</groupId>
+            <artifactId>Item-Server-Service</artifactId>
+        </dependency>
     </dependencies>
 </project>
