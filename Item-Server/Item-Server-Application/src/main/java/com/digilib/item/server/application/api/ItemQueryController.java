@@ -25,6 +25,7 @@ public class ItemQueryController {
         return itemQueryService.findItem(ISBN);
     }
 
+    @GetMapping
     public List<ItemSummaryResponse> findItemsSummary() {
         return itemQueryService.fetchItemsSummary();
     }
