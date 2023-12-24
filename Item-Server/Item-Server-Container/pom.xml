@@ -10,4 +10,16 @@
     </parent>
 
     <artifactId>Item-Server-Container</artifactId>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.digilib.item.server.application</groupId>
+            <artifactId>Item-Server-Application</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+    </dependencies>
 </project>
