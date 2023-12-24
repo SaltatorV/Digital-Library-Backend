@@ -1,6 +1,6 @@
 package com.digilib.item.server.application.api;
 
-import com.digilib.item.server.service.port.input.ItemService;
+import com.digilib.item.server.service.port.input.ItemQueryService;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -10,13 +10,13 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.doReturn;
 
-public class ItemControllerTest {
+public class ItemQueryControllerTest {
 
     @Mock
-    private ItemService itemService;
+    private ItemQueryService itemQueryService;
 
     @InjectMocks
-    private ItemController itemController;
+    private ItemQueryController itemQueryController;
 
 
     @Test
@@ -24,11 +24,11 @@ public class ItemControllerTest {
         //given
         String ISBN = createRandomISBN();
         doReturn(ISBN)
-                .when(itemService)
+                .when(itemQueryService)
                 .findItem(ISBN);
 
         //when
-        var response = itemController.findItem(ISBN);
+        var response = itemQueryController.findItem(ISBN);
 
         //then
         assertEquals(ISBN, response.getISBN());

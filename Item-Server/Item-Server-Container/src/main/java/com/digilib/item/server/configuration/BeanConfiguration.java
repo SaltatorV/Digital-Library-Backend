@@ -1,7 +1,7 @@
 package com.digilib.item.server.configuration;
 
 import com.digilib.item.server.service.dto.response.ItemResponse;
-import com.digilib.item.server.service.port.input.ItemService;
+import com.digilib.item.server.service.port.input.ItemQueryService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -9,8 +9,8 @@ import org.springframework.context.annotation.Configuration;
 public class BeanConfiguration {
 
     @Bean
-    public ItemService itemService() {
-        return new ItemService() {
+    public ItemQueryService itemService() {
+        return new ItemQueryService() {
             @Override
             public ItemResponse findItem(String ISBN) {
                 return ItemResponse.create(ISBN);

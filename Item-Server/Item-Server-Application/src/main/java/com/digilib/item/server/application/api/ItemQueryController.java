@@ -1,7 +1,7 @@
 package com.digilib.item.server.application.api;
 
 import com.digilib.item.server.service.dto.response.ItemResponse;
-import com.digilib.item.server.service.port.input.ItemService;
+import com.digilib.item.server.service.port.input.ItemQueryService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,16 +9,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/items")
-public class ItemController {
+public class ItemQueryController {
 
-    private final ItemService itemService;
+    private final ItemQueryService itemQueryService;
 
-    public ItemController(ItemService itemService) {
-        this.itemService = itemService;
+    public ItemQueryController(ItemQueryService itemQueryService) {
+        this.itemQueryService = itemQueryService;
     }
 
     @GetMapping("{ISBN}")
     ItemResponse findItem(@PathVariable String ISBN) {
-        return itemService.findItem(ISBN);
+        return itemQueryService.findItem(ISBN);
     }
 }
