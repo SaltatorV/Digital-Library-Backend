@@ -34,7 +34,7 @@
         <item.server-version>0.0.1-SNAPSHOT</item.server-version>
 
         <spring-boot-starter.version>3.2.1</spring-boot-starter.version>
-        <mockito-core-version>5.7.0</mockito-core-version>
+        <mockito-core.version>5.7.0</mockito-core.version>
     </properties>
 
     <dependencyManagement>
