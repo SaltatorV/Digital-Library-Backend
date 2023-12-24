@@ -10,4 +10,8 @@ public class ItemSummaryResponse {
     public static ItemSummaryResponse create(String title) {
         return new ItemSummaryResponse(title);
     }
+
+    public String getTitle() {
+        return title;
+    }
 }
