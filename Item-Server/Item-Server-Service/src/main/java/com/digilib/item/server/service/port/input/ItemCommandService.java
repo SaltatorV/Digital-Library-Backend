@@ -8,4 +8,6 @@ public interface ItemCommandService {
     MessageResponse createItem(CreateItemCommand command);
 
     MessageResponse deleteItem(String isbn);
+
+    MessageResponse updateItem(String isbn);
 }
