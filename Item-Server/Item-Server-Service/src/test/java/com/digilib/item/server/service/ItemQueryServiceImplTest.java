@@ -1,11 +1,8 @@
 package com.digilib.item.server.service;
 
-import com.digilib.item.server.service.dto.response.ItemSummaryResponse;
 import com.digilib.item.server.service.port.input.ItemQueryService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -42,5 +39,4 @@ public class ItemQueryServiceImplTest {
     public String createISBN() {
         return "0-061-96436-0";
     }
-
 }
