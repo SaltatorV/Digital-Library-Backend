@@ -15,21 +15,6 @@ import java.util.List;
 public class BeanConfiguration {
 
     @Bean
-    public ItemQueryService itemQueryService() {
-        return new ItemQueryService() {
-            @Override
-            public ItemResponse findItem(String ISBN) {
-                return ItemResponse.create(ISBN);
-            }
-
-            @Override
-            public List<ItemSummaryResponse> fetchItemsSummary() {
-                return List.of(ItemSummaryResponse.create("Title-1"));
-            }
-        };
-    }
-
-    @Bean
     public ItemCommandService itemCommandService() {
         return new ItemCommandService() {
             @Override
