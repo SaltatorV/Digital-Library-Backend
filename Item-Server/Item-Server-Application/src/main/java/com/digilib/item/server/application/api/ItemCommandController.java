@@ -3,9 +3,7 @@ package com.digilib.item.server.application.api;
 import com.digilib.item.server.service.dto.command.CreateItemCommand;
 import com.digilib.item.server.service.dto.response.MessageResponse;
 import com.digilib.item.server.service.port.input.ItemCommandService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/items")
@@ -22,7 +20,9 @@ public class ItemCommandController {
         return itemCommandService.createItem(command);
     }
 
-    public MessageResponse deleteItem(String isbn) {
-        return itemCommandService.deleteItem(isbn);
+
+    @DeleteMapping("{ISBN}")
+    public MessageResponse deleteItem(@PathVariable String ISBN) {
+        return itemCommandService.deleteItem(ISBN);
     }
 }
