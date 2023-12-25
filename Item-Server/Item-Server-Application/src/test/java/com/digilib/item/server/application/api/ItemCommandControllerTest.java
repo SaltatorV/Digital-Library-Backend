@@ -38,6 +38,22 @@ public class ItemCommandControllerTest {
         assertEquals(expected, response);
     }
 
+    @Test
+    public void shouldDeleteItem() {
+        //given
+        var ISBN = "0-061-96436-0";
+        var expected = MessageResponse.create("Item successfully deleted!");
+        doReturn(expected)
+                .when(itemCommandService)
+                .deleteItem(ISBN);
+
+        //when
+        var response = itemCommandController.deleteItem(ISBN);
+
+        //then
+        assertEquals(expected, response);
+    }
+
     private CreateItemCommand createItemCommand() {
         return new CreateItemCommand("978-83-644-7691-4");
     }

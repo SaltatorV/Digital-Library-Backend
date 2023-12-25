@@ -6,4 +6,6 @@ import com.digilib.item.server.service.dto.response.MessageResponse;
 public interface ItemCommandService {
 
     MessageResponse createItem(CreateItemCommand command);
+
+    MessageResponse deleteItem(String isbn);
 }
