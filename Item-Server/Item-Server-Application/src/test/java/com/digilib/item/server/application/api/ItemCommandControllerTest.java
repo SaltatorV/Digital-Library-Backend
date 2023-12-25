@@ -41,7 +41,7 @@ public class ItemCommandControllerTest {
     @Test
     public void shouldDeleteItem() {
         //given
-        var ISBN = "0-061-96436-0";
+        var ISBN = createISBN();
         var expected = MessageResponse.create("Item successfully deleted!");
         doReturn(expected)
                 .when(itemCommandService)
@@ -52,6 +52,26 @@ public class ItemCommandControllerTest {
 
         //then
         assertEquals(expected, response);
+    }
+
+    @Test
+    public void shouldUpdateItem() {
+
+        //given
+        var ISBN = createISBN();
+        var expected = MessageResponse.create("Item successfully updated!");
+        doReturn(expected)
+                .when(itemCommandService)
+                .updateItem(ISBN);
+        //when
+        var response = itemCommandController.updateItem(ISBN);
+
+        //then
+        assertEquals(expected, response);
+    }
+
+    public String createISBN() {
+        return "0-061-96436-0";
     }
 
     private CreateItemCommand createItemCommand() {

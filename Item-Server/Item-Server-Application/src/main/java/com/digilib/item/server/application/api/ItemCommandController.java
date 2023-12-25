@@ -25,4 +25,9 @@ public class ItemCommandController {
     public MessageResponse deleteItem(@PathVariable String ISBN) {
         return itemCommandService.deleteItem(ISBN);
     }
+
+    @PatchMapping("{ISBN}")
+    public MessageResponse updateItem(@PathVariable String ISBN) {
+        return itemCommandService.updateItem(ISBN);
+    }
 }
