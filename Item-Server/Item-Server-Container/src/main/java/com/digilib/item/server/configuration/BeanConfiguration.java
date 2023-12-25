@@ -41,6 +41,11 @@ public class BeanConfiguration {
             public MessageResponse deleteItem(String isbn) {
                 return MessageResponse.create("Item successfully deleted!");
             }
+
+            @Override
+            public MessageResponse updateItem(String isbn) {
+                return MessageResponse.create("Item successfully updated!");
+            }
         };
     }
 }
