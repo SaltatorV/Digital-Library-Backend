@@ -21,4 +21,8 @@ public class ItemCommandController {
     public MessageResponse saveItem(CreateItemCommand command) {
         return itemCommandService.createItem(command);
     }
+
+    public MessageResponse deleteItem(String isbn) {
+        return itemCommandService.deleteItem(isbn);
+    }
 }
