@@ -5,6 +5,8 @@ import com.digilib.item.server.service.port.input.ItemCommandService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.sql.Date;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ItemCommandServiceImplTest {
@@ -19,7 +21,7 @@ public class ItemCommandServiceImplTest {
     @Test
     public void shouldCreateNewItem() {
         //given
-        var command = preapreCreateItemCommand();
+        var command = prepareAddTheHobbitCommand();
 
         //when
         var result = itemCommandService.createItem(command);
@@ -52,8 +54,9 @@ public class ItemCommandServiceImplTest {
         assertEquals("Item successfully updated!", result.getMessage());
     }
 
-    private CreateItemCommand preapreCreateItemCommand() {
-        return new CreateItemCommand(createISBN());
+    private CreateItemCommand prepareAddTheHobbitCommand() {
+        return new CreateItemCommand("978-0547928227", "The Hobbit: Or There and Back Again",
+                "J.R.R. Tolkien", "William Morrow & Company", Date.valueOf("2012-10-18"));
     }
 
     public String createISBN() {
