@@ -9,6 +9,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.sql.Date;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.doReturn;
 
@@ -25,7 +27,7 @@ public class ItemCommandControllerTest {
     public void shouldSaveNewItem() {
 
         //given
-        var command = createItemCommand();
+        var command = prepareAddTheHobbitCommand();
         var expected = createResponseWithMessage("Item successfully created!");
         doReturn(expected)
                 .when(itemCommandService)
@@ -74,8 +76,9 @@ public class ItemCommandControllerTest {
         return "0-061-96436-0";
     }
 
-    private CreateItemCommand createItemCommand() {
-        return new CreateItemCommand("978-83-644-7691-4");
+    private CreateItemCommand prepareAddTheHobbitCommand() {
+        return new CreateItemCommand("978-0547928227", "The Hobbit: Or There and Back Again",
+                "J.R.R. Tolkien", "William Morrow & Company", Date.valueOf("2012-10-18"));
     }
 
     private MessageResponse createResponseWithMessage(String message) {
