@@ -1,24 +1,33 @@
 package com.digilib.item.server.service;
 
-import com.digilib.item.server.service.port.input.ItemQueryService;
-import org.junit.jupiter.api.BeforeEach;
+import com.digilib.item.server.service.port.output.ItemRepository;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.doReturn;
 
+@ExtendWith(MockitoExtension.class)
 public class ItemQueryServiceImplTest {
 
-    private ItemQueryService itemQueryService;
-
-    @BeforeEach
-    public void setup(){
-        itemQueryService = new ItemQueryServiceImpl();
-    }
+    @Mock
+    private ItemRepository itemRepository;
+    @InjectMocks
+    private ItemQueryServiceImpl itemQueryService;
 
     @Test
     public void shouldReturnItemResponseWithSameISBN() {
         //given
         String ISBN = createISBN();
+        doReturn(Optional.of(ISBN))
+                .when(itemRepository)
+                .findByISBN(ISBN);
 
         //when
         var result = itemQueryService.findItem(ISBN);
