@@ -1,6 +1,7 @@
 package com.digilib.item.server.application.api;
 
 import com.digilib.item.server.service.dto.command.CreateItemCommand;
+import com.digilib.item.server.service.dto.command.CreateItemDetailsCommand;
 import com.digilib.item.server.service.dto.response.MessageResponse;
 import com.digilib.item.server.service.port.input.ItemCommandService;
 import org.junit.jupiter.api.Test;
@@ -44,7 +45,7 @@ public class ItemCommandControllerTest {
     public void shouldDeleteItem() {
         //given
         var ISBN = createISBN();
-        var expected = MessageResponse.create("Item successfully deleted!");
+        var expected = createResponseWithMessage("Item successfully deleted!");
         doReturn(expected)
                 .when(itemCommandService)
                 .deleteItem(ISBN);
@@ -61,12 +62,30 @@ public class ItemCommandControllerTest {
 
         //given
         var ISBN = createISBN();
-        var expected = MessageResponse.create("Item successfully updated!");
+        var expected = createResponseWithMessage("Item successfully updated!");
         doReturn(expected)
                 .when(itemCommandService)
                 .updateItem(ISBN);
         //when
         var response = itemCommandController.updateItem(ISBN);
+
+        //then
+        assertEquals(expected, response);
+    }
+
+    @Test
+    public void shouldCreateItemDetails() {
+        //given
+        var ISBN = createISBN();
+        var command = prepareItemDetails();
+        var expected = createResponseWithMessage("Item details successfully bounded!");
+
+        doReturn(expected)
+                .when(itemCommandService)
+                .createItemDetails(ISBN, command);
+
+        //when
+        var response = itemCommandController.createItemDetails(ISBN, command);
 
         //then
         assertEquals(expected, response);
@@ -79,6 +98,16 @@ public class ItemCommandControllerTest {
     private CreateItemCommand prepareAddTheHobbitCommand() {
         return new CreateItemCommand("978-0547928227", "The Hobbit: Or There and Back Again",
                 "J.R.R. Tolkien", "William Morrow & Company", Date.valueOf("2012-10-18"));
+    }
+
+    private CreateItemDetailsCommand prepareItemDetails() {
+        int quantity = 1;
+        byte[] img = {0,1,0,1,1,1,1};
+        double widthInMM = 133.4;
+        double heightInMM = 215.9;
+        double thicknessInMM = 25.4;
+
+        return new CreateItemDetailsCommand(quantity, img, widthInMM, heightInMM, thicknessInMM);
     }
 
     private MessageResponse createResponseWithMessage(String message) {
