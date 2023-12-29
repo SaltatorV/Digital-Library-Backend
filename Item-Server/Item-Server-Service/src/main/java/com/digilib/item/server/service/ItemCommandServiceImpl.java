@@ -25,6 +25,6 @@ public class ItemCommandServiceImpl implements ItemCommandService {
 
     @Override
     public MessageResponse createItemDetails(String isbn, CreateItemDetailsCommand command) {
-        return MessageResponse.create("Item details successfully bounded");
+        return MessageResponse.create("Item details successfully bounded!");
     }
 }
