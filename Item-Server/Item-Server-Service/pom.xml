@@ -22,6 +22,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.digilib.common.domain</groupId>
+            <artifactId>Common-Domain</artifactId>
+        </dependency>
     </dependencies>
 
 </project>
