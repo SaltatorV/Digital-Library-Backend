@@ -27,6 +27,11 @@
             <groupId>com.digilib.common.domain</groupId>
             <artifactId>Common-Domain</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.digilib.item.server.domain</groupId>
+            <artifactId>Item-Server-Domain</artifactId>
+        </dependency>
     </dependencies>
 
 </project>
