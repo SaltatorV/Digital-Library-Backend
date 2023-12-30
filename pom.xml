@@ -36,11 +36,12 @@
 
         <spring-boot-starter.version>3.2.1</spring-boot-starter.version>
         <mockito-core.version>5.7.0</mockito-core.version>
+
+        <maven-surefire-plugin.version>3.2.3</maven-surefire-plugin.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
-
             <dependency>
                 <groupId>com.digilib.item.server.application</groupId>
                 <artifactId>Item-Server-Application</artifactId>
@@ -50,6 +51,11 @@
                 <groupId>com.digilib.item.server.service</groupId>
                 <artifactId>Item-Server-Service</artifactId>
                 <version>${item-server.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.digilib.item.server.domain</groupId>
+                <artifactId>Item-Server-Domain</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
             </dependency>
 
             <dependency>
@@ -94,6 +100,11 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven-surefire-plugin.version}</version>
             </plugin>
         </plugins>
     </build>

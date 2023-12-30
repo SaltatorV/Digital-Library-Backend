@@ -1,8 +1,8 @@
 package com.digilib.item.server.service;
 
+import com.digilib.item.server.domain.exception.ItemNotFoundException;
 import com.digilib.item.server.service.dto.response.ItemResponse;
 import com.digilib.item.server.service.dto.response.ItemSummaryResponse;
-import com.digilib.item.server.service.exception.ItemNotFoundException;
 import com.digilib.item.server.service.port.input.ItemQueryService;
 import com.digilib.item.server.service.port.output.ItemRepository;
 import org.springframework.stereotype.Service;
