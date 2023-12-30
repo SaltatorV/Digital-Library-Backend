@@ -1,6 +1,6 @@
 package com.digilib.item.server.service;
 
-import com.digilib.item.server.service.exception.ItemNotFoundException;
+import com.digilib.item.server.domain.exception.ItemNotFoundException;
 import com.digilib.item.server.service.port.output.ItemRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
