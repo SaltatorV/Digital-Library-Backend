@@ -4,12 +4,14 @@ import com.digilib.common.domain.exception.DomainExceptionHandler;
 import com.digilib.common.domain.exception.ErrorResponse;
 import com.digilib.item.server.domain.exception.ItemServerDomainException;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import static com.digilib.common.domain.exception.ErrorResponse.anErrorResponse;
 
+@ControllerAdvice
 public class ItemServerDomainExceptionHandler implements DomainExceptionHandler<ItemServerDomainException> {
 
     @ResponseBody
