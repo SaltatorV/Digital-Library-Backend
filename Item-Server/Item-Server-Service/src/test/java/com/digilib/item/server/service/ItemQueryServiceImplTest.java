@@ -1,5 +1,6 @@
 package com.digilib.item.server.service;
 
+import com.digilib.item.server.service.exception.ItemNotFoundException;
 import com.digilib.item.server.service.port.output.ItemRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -11,6 +12,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.doReturn;
 
 @ExtendWith(MockitoExtension.class)
@@ -34,6 +36,18 @@ public class ItemQueryServiceImplTest {
 
         //then
         assertEquals(ISBN, result.getISBN());
+    }
+
+    @Test
+    public void shouldThrowExceptionWhenCannotFindItem() {
+        //given
+        String ISBN = createISBN();
+        doReturn(Optional.empty())
+                .when(itemRepository)
+                .findByISBN(ISBN);
+
+        //when
+        assertThrows(ItemNotFoundException.class, () -> itemQueryService.findItem(ISBN));
     }
 
     @Test
