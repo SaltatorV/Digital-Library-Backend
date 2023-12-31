@@ -7,7 +7,7 @@ import com.digilib.item.server.service.port.input.ItemCommandFacade;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ItemCommandFacadeImpl implements ItemCommandFacade {
+class ItemCommandFacadeImpl implements ItemCommandFacade {
     @Override
     public MessageResponse createItem(CreateItemCommand command) {
         return MessageResponse.create("Item successfully created!");

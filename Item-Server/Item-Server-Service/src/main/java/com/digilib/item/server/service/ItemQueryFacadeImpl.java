@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ItemQueryFacadeImpl implements ItemQueryFacade {
+class ItemQueryFacadeImpl implements ItemQueryFacade {
 
     private final ItemRepository itemRepository;
 
