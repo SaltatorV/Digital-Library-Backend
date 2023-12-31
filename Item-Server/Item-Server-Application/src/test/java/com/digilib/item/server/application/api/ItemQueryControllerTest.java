@@ -2,7 +2,7 @@ package com.digilib.item.server.application.api;
 
 import com.digilib.item.server.service.dto.response.ItemResponse;
 import com.digilib.item.server.service.dto.response.ItemSummaryResponse;
-import com.digilib.item.server.service.port.input.ItemQueryService;
+import com.digilib.item.server.service.port.input.ItemQueryFacade;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -19,7 +19,7 @@ import static org.mockito.Mockito.doReturn;
 public class ItemQueryControllerTest {
 
     @Mock
-    private ItemQueryService itemQueryService;
+    private ItemQueryFacade itemQueryFacade;
 
     @InjectMocks
     private ItemQueryController itemQueryController;
@@ -30,7 +30,7 @@ public class ItemQueryControllerTest {
         //given
         String ISBN = createISBN();
         doReturn(createItemResponse(ISBN))
-                .when(itemQueryService)
+                .when(itemQueryFacade)
                 .findItem(ISBN);
 
         //when
@@ -45,7 +45,7 @@ public class ItemQueryControllerTest {
         //given
         List<ItemSummaryResponse> items = createSummaryWith3Items();
         doReturn(items)
-                .when(itemQueryService)
+                .when(itemQueryFacade)
                 .fetchItemsSummary();
 
         //when
