@@ -2,7 +2,7 @@ package com.digilib.item.server.service;
 
 import com.digilib.item.server.service.dto.command.CreateItemCommand;
 import com.digilib.item.server.service.dto.command.CreateItemDetailsCommand;
-import com.digilib.item.server.service.port.input.ItemCommandService;
+import com.digilib.item.server.service.port.input.ItemCommandFacade;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -10,13 +10,13 @@ import java.sql.Date;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class ItemCommandServiceImplTest {
+public class ItemCommandFacadeImplTest {
 
-    private ItemCommandService itemCommandService;
+    private ItemCommandFacade itemCommandFacade;
 
     @BeforeEach
     public void setup(){
-        itemCommandService = new ItemCommandServiceImpl();
+        itemCommandFacade = new ItemCommandFacadeImpl();
     }
 
     @Test
@@ -25,7 +25,7 @@ public class ItemCommandServiceImplTest {
         var command = prepareAddTheHobbitCommand();
 
         //when
-        var result = itemCommandService.createItem(command);
+        var result = itemCommandFacade.createItem(command);
 
         //then
         assertEquals("Item successfully created!", result.getMessage());
@@ -37,7 +37,7 @@ public class ItemCommandServiceImplTest {
         var ISBN = createISBN();
 
         //when
-        var result = itemCommandService.deleteItem(ISBN);
+        var result = itemCommandFacade.deleteItem(ISBN);
 
         //then
         assertEquals("Item successfully deleted!", result.getMessage());
@@ -49,7 +49,7 @@ public class ItemCommandServiceImplTest {
         var ISBN = createISBN();
 
         //when
-        var result = itemCommandService.updateItem(ISBN);
+        var result = itemCommandFacade.updateItem(ISBN);
 
         //then
         assertEquals("Item successfully updated!", result.getMessage());
@@ -62,7 +62,7 @@ public class ItemCommandServiceImplTest {
         var command = prepareItemDetails();
 
         //when
-        var result = itemCommandService.createItemDetails(ISBN, command);
+        var result = itemCommandFacade.createItemDetails(ISBN, command);
 
         //then
         assertEquals("Item details successfully bounded!", result.getMessage());

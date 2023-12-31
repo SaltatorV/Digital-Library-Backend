@@ -5,7 +5,7 @@ import java.util.List;
 import com.digilib.item.server.service.dto.response.ItemResponse;
 import com.digilib.item.server.service.dto.response.ItemSummaryResponse;
 
-public interface ItemQueryService {
+public interface ItemQueryFacade {
 
     ItemResponse findItem(String ISBN);
 

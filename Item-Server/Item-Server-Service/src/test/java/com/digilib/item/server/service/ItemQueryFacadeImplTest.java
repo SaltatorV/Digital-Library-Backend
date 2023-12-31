@@ -16,12 +16,12 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.doReturn;
 
 @ExtendWith(MockitoExtension.class)
-public class ItemQueryServiceImplTest {
+public class ItemQueryFacadeImplTest {
 
     @Mock
     private ItemRepository itemRepository;
     @InjectMocks
-    private ItemQueryServiceImpl itemQueryService;
+    private ItemQueryFacadeImpl itemQueryService;
 
     @Test
     public void shouldReturnItemResponseWithSameISBN() {
