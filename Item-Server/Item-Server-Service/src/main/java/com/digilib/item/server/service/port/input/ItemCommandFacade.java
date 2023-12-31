@@ -4,7 +4,7 @@ import com.digilib.item.server.service.dto.command.CreateItemCommand;
 import com.digilib.item.server.service.dto.command.CreateItemDetailsCommand;
 import com.digilib.item.server.service.dto.response.MessageResponse;
 
-public interface ItemCommandService {
+public interface ItemCommandFacade {
 
     MessageResponse createItem(CreateItemCommand command);
 

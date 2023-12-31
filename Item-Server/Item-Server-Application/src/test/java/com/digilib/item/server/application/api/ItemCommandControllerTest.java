@@ -3,7 +3,7 @@ package com.digilib.item.server.application.api;
 import com.digilib.item.server.service.dto.command.CreateItemCommand;
 import com.digilib.item.server.service.dto.command.CreateItemDetailsCommand;
 import com.digilib.item.server.service.dto.response.MessageResponse;
-import com.digilib.item.server.service.port.input.ItemCommandService;
+import com.digilib.item.server.service.port.input.ItemCommandFacade;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -20,7 +20,7 @@ public class ItemCommandControllerTest {
 
 
     @Mock
-    ItemCommandService itemCommandService;
+    ItemCommandFacade itemCommandFacade;
     @InjectMocks
     ItemCommandController itemCommandController;
 
@@ -31,7 +31,7 @@ public class ItemCommandControllerTest {
         var command = prepareAddTheHobbitCommand();
         var expected = createResponseWithMessage("Item successfully created!");
         doReturn(expected)
-                .when(itemCommandService)
+                .when(itemCommandFacade)
                 .createItem(command);
 
         //when
@@ -47,7 +47,7 @@ public class ItemCommandControllerTest {
         var ISBN = createISBN();
         var expected = createResponseWithMessage("Item successfully deleted!");
         doReturn(expected)
-                .when(itemCommandService)
+                .when(itemCommandFacade)
                 .deleteItem(ISBN);
 
         //when
@@ -64,7 +64,7 @@ public class ItemCommandControllerTest {
         var ISBN = createISBN();
         var expected = createResponseWithMessage("Item successfully updated!");
         doReturn(expected)
-                .when(itemCommandService)
+                .when(itemCommandFacade)
                 .updateItem(ISBN);
         //when
         var response = itemCommandController.updateItem(ISBN);
@@ -81,7 +81,7 @@ public class ItemCommandControllerTest {
         var expected = createResponseWithMessage("Item details successfully bounded!");
 
         doReturn(expected)
-                .when(itemCommandService)
+                .when(itemCommandFacade)
                 .createItemDetails(ISBN, command);
 
         //when
