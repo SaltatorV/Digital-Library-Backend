@@ -11,4 +11,7 @@ public class ItemId extends BaseId {
     public static ItemId generate() {
         return new ItemId(UUID.randomUUID());
     }
+    public static ItemId restore(String id) {
+        return new ItemId(UUID.fromString(id));
+    }
 }
