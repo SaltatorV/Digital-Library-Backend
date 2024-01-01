@@ -28,4 +28,19 @@ public class ItemRepositoryImpl implements ItemRepository {
                 .stream()
                 .anyMatch(snapshot -> snapshot.getIsbn().equals(isbn));
     }
+
+    @Override
+    public void delete(String isbn) {
+        Optional<ItemSnapshot> toDelete = snapshots
+                .stream()
+                .filter(snapshot -> snapshot.getIsbn().equals(isbn))
+                .findFirst();
+
+        toDelete.ifPresent(snapshot -> snapshots.remove(snapshot));
+    }
+
+    @Override
+    public void update(ItemSnapshot snapshot) {
+
+    }
 }
