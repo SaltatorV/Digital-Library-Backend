@@ -1,15 +1,14 @@
-package com.digilib.item.server.configuration;
+package com.digilib.item.server.service;
 
 import com.digilib.item.server.service.port.output.ItemRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Configuration
-public class BeanConfiguration {
+public class ItemServerServiceConfiguration {
 
     @Bean
     ItemRepository itemRepository() {
