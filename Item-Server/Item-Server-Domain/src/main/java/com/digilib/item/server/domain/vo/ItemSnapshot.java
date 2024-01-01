@@ -14,6 +14,10 @@ public class ItemSnapshot {
         this.id = id;
     }
 
+    public ItemSnapshot(String isbn, String author, String title, String publisher) {
+        this(isbn);
+    }
+
     public String getId() {
         return id;
     }
