@@ -9,4 +9,7 @@ public interface ItemRepository {
     void save(ItemSnapshot snapshot);
     boolean existsByISBN(String ISBN);
 
+    void delete(String isbn);
+
+    void update(ItemSnapshot snapshot);
 }
