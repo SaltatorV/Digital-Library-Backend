@@ -1,6 +1,6 @@
 package com.digilib.item.server.application.handler;
 
-import com.digilib.common.domain.exception.DomainExceptionHandler;
+import com.digilib.common.application.handler.DomainExceptionHandler;
 import com.digilib.common.domain.exception.ErrorResponse;
 import com.digilib.item.server.domain.exception.ItemServerDomainException;
 import org.springframework.http.HttpStatus;

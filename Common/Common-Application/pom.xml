@@ -13,4 +13,11 @@
     <artifactId>Common-Application</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.digilib.common.domain</groupId>
+            <artifactId>Common-Domain</artifactId>
+        </dependency>
+    </dependencies>
+
 </project>
