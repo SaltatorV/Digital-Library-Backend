@@ -1,28 +1,39 @@
 package com.digilib.item.server.service;
 
+import com.digilib.item.server.domain.ItemDomainFacade;
+import com.digilib.item.server.domain.vo.ItemSnapshot;
 import com.digilib.item.server.service.dto.command.CreateItemCommand;
 import com.digilib.item.server.service.dto.command.CreateItemDetailsCommand;
-import com.digilib.item.server.service.port.input.ItemCommandFacade;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.sql.Date;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doReturn;
 
+@ExtendWith(MockitoExtension.class)
 public class ItemCommandFacadeImplTest {
 
-    private ItemCommandFacade itemCommandFacade;
-
-    @BeforeEach
-    public void setup(){
-        itemCommandFacade = new ItemCommandFacadeImpl();
-    }
+    @Mock
+    private ItemDomainFacade itemDomainFacade;
+    @InjectMocks
+    private ItemCommandFacadeImpl itemCommandFacade;
 
     @Test
     public void shouldCreateNewItem() {
         //given
         var command = prepareAddTheHobbitCommand();
+        var snapshot = createInitializedSnapshot(command);
+
+        doReturn(snapshot)
+                .when(itemDomainFacade)
+                .createItem(any());
 
         //when
         var result = itemCommandFacade.createItem(command);
@@ -85,5 +96,9 @@ public class ItemCommandFacadeImplTest {
         double thicknessInMM = 25.4;
 
         return new CreateItemDetailsCommand(quantity, img, widthInMM, heightInMM, thicknessInMM);
+    }
+
+    private ItemSnapshot createInitializedSnapshot(CreateItemCommand command) {
+        return new ItemSnapshot(UUID.randomUUID().toString(), command.getISBN());
     }
 }
