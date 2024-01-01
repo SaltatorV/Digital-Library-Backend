@@ -2,6 +2,7 @@ package com.digilib.item.server.application.api;
 
 import com.digilib.item.server.service.dto.command.CreateItemCommand;
 import com.digilib.item.server.service.dto.command.CreateItemDetailsCommand;
+import com.digilib.item.server.service.dto.command.UpdateItemCommand;
 import com.digilib.item.server.service.dto.response.MessageResponse;
 import com.digilib.item.server.service.port.input.ItemCommandFacade;
 import org.junit.jupiter.api.Test;
@@ -62,12 +63,13 @@ public class ItemCommandControllerTest {
 
         //given
         var ISBN = createISBN();
+        var command = prepareUpdateTheHobbitCommand();
         var expected = createResponseWithMessage("Item successfully updated!");
         doReturn(expected)
                 .when(itemCommandFacade)
-                .updateItem(ISBN);
+                .updateItem(ISBN, command);
         //when
-        var response = itemCommandController.updateItem(ISBN);
+        var response = itemCommandController.updateItem(ISBN, command);
 
         //then
         assertEquals(expected, response);
@@ -97,6 +99,11 @@ public class ItemCommandControllerTest {
 
     private CreateItemCommand prepareAddTheHobbitCommand() {
         return new CreateItemCommand("978-0547928227", "The Hobbit: Or There and Back Again",
+                "J.R.R. Tolkien", "William Morrow & Company", Date.valueOf("2012-10-18"));
+    }
+
+    private UpdateItemCommand prepareUpdateTheHobbitCommand() {
+        return new UpdateItemCommand("The Hobbit: Or There and Back Again",
                 "J.R.R. Tolkien", "William Morrow & Company", Date.valueOf("2012-10-18"));
     }
 
