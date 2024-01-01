@@ -1,6 +1,8 @@
 package com.digilib.item.server.service;
 
 import com.digilib.item.server.domain.exception.ItemNotFoundException;
+import com.digilib.item.server.domain.vo.ItemSnapshot;
+import com.digilib.item.server.service.dto.command.CreateItemCommand;
 import com.digilib.item.server.service.port.output.ItemRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -9,7 +11,9 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 
+import java.sql.Date;
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -26,16 +30,16 @@ public class ItemQueryFacadeImplTest {
     @Test
     public void shouldReturnItemResponseWithSameISBN() {
         //given
-        String ISBN = createISBN();
-        doReturn(Optional.of(ISBN))
+        var snapshot = prepareTheHobbitSnapshot();
+        doReturn(Optional.of(snapshot))
                 .when(itemRepository)
-                .findByISBN(ISBN);
+                .findByISBN(snapshot.getIsbn());
 
         //when
-        var result = itemQueryService.findItem(ISBN);
+        var result = itemQueryService.findItem(snapshot.getIsbn());
 
         //then
-        assertEquals(ISBN, result.getISBN());
+        assertEquals(snapshot.getIsbn(), result.getISBN());
     }
 
     @Test
@@ -60,6 +64,10 @@ public class ItemQueryFacadeImplTest {
     }
 
     public String createISBN() {
-        return "0-061-96436-0";
+        return "978-0547928227";
+    }
+
+    private ItemSnapshot prepareTheHobbitSnapshot() {
+        return new ItemSnapshot(UUID.randomUUID().toString(), "978-0547928227");
     }
 }

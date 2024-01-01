@@ -23,13 +23,13 @@ class ItemQueryFacadeImpl implements ItemQueryFacade {
 
     @Override
     public ItemResponse findItem(String ISBN) {
-        Optional<ItemSnapshot> ISBNFromDb = itemRepository.findByISBN(ISBN);
+        Optional<ItemSnapshot> snapshot = itemRepository.findByISBN(ISBN);
 
-        if(ISBNFromDb.isEmpty()) {
+        if(snapshot.isEmpty()) {
             throw new ItemNotFoundException();
         }
 
-        return ItemResponse.create(ISBNFromDb.get().getIsbn());
+        return ItemResponse.create(snapshot.get().getIsbn());
     }
 
     @Override
