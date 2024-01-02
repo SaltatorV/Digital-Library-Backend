@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 public class ItemTest {
 
     @Test
-    public void shouldInitializeId() {
+    public void shouldInitializeItem() {
         //given
         var snapshot = createSnapshotWithValidISBN();
 
