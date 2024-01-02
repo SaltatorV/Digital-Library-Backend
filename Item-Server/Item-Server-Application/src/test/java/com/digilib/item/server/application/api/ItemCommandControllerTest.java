@@ -98,7 +98,7 @@ public class ItemCommandControllerTest {
     }
 
     private CreateItemCommand prepareAddTheHobbitCommand() {
-        return new CreateItemCommand("978-0547928227", "The Hobbit: Or There and Back Again",
+        return new CreateItemCommand("978-0547928227", "Fantasy" ,"The Hobbit: Or There and Back Again",
                 "J.R.R. Tolkien", "William Morrow & Company", Date.valueOf("2012-10-18"));
     }
 
