@@ -4,6 +4,8 @@ import com.digilib.item.server.domain.vo.ItemSnapshot;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.sql.Date;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -19,7 +21,7 @@ public class ItemDomainFacadeImplTest {
     @Test
     public void shouldCreateItem() {
         //given
-        var expected = createSnapshotWithValidISBN();
+        var expected = prepareNotInitializedTheHobbitItem();
 
         //when
         var snapshot = facade.createItem(expected);
@@ -29,7 +31,8 @@ public class ItemDomainFacadeImplTest {
         assertNotNull(snapshot.getId());
     }
 
-    private ItemSnapshot createSnapshotWithValidISBN() {
-        return new ItemSnapshot("978-83-01-00000-1");
+    private ItemSnapshot prepareNotInitializedTheHobbitItem() {
+        return new ItemSnapshot("978-0547928227", "Fantasy" ,"The Hobbit: Or There and Back Again",
+                "J.R.R. Tolkien", "William Morrow & Company", Date.valueOf("2012-10-18"));
     }
 }
