@@ -133,8 +133,8 @@ public class ItemCommandFacadeImplTest {
     }
 
     private CreateItemCommand prepareAddTheHobbitCommand() {
-        return new CreateItemCommand("978-0547928227", "The Hobbit: Or There and Back Again",
-                "J.R.R. Tolkien", "William Morrow & Company", Date.valueOf("2012-10-18"));
+        return new CreateItemCommand("978-0547928227","Fantasy" ,"The Hobbit: Or There and Back Again",
+                "J.R.R. Tolkien", "William Morrow & Company" ,Date.valueOf("2012-10-18"));
     }
     private UpdateItemCommand prepareUpdateTheHobbitCommand() {
         return new UpdateItemCommand("The Hobbit: Or There and Back Again",
