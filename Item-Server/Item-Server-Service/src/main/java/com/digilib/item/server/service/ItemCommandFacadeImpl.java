@@ -30,8 +30,8 @@ class ItemCommandFacadeImpl implements ItemCommandFacade {
             throw new ItemAlreadyExistsException();
         }
 
-        ItemSnapshot snapshot = new ItemSnapshot(command.getISBN(), command.getAuthor(),
-                command.getTitle(), command.getPublisher());
+        ItemSnapshot snapshot = new ItemSnapshot(command.getISBN(), command.getGenre(), command.getTitle(),
+                command.getAuthor(), command.getPublisher(), command.getReleaseDate());
 
         ItemSnapshot initializedSnapshot = itemDomainFacade.createItem(snapshot);
         repository.save(initializedSnapshot);
@@ -55,8 +55,8 @@ class ItemCommandFacadeImpl implements ItemCommandFacade {
             throw new ItemNotFoundException();
         }
 
-        ItemSnapshot snapshot = new ItemSnapshot(ISBN,
-                command.getAuthor(), command.getTitle(), command.getPublisher());
+        ItemSnapshot snapshot = new ItemSnapshot(ISBN, command.getGenre(), command.getTitle(),
+                command.getAuthor(), command.getPublisher(), command.getReleaseDate());
 
         repository.update(snapshot);
 

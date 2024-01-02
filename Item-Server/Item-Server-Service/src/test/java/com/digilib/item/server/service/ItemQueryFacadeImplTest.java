@@ -2,7 +2,6 @@ package com.digilib.item.server.service;
 
 import com.digilib.item.server.domain.exception.ItemNotFoundException;
 import com.digilib.item.server.domain.vo.ItemSnapshot;
-import com.digilib.item.server.service.dto.command.CreateItemCommand;
 import com.digilib.item.server.service.port.output.ItemRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -45,7 +44,7 @@ public class ItemQueryFacadeImplTest {
     @Test
     public void shouldThrowExceptionWhenCannotFindItem() {
         //given
-        String ISBN = createISBN();
+        String ISBN = createTheHobbitISBN();
         doReturn(Optional.empty())
                 .when(itemRepository)
                 .findByISBN(ISBN);
@@ -63,11 +62,12 @@ public class ItemQueryFacadeImplTest {
         assertEquals(3, result.size());
     }
 
-    public String createISBN() {
+    public String createTheHobbitISBN() {
         return "978-0547928227";
     }
 
     private ItemSnapshot prepareTheHobbitSnapshot() {
-        return new ItemSnapshot(UUID.randomUUID().toString(), "978-0547928227");
+        return new ItemSnapshot(UUID.randomUUID().toString(), "978-0547928227", "The Hobbit: Or There and Back Again", "Fantasy",
+                "J.R.R. Tolkien", "William Morrow & Company", Date.valueOf("2012-10-18"));
     }
 }

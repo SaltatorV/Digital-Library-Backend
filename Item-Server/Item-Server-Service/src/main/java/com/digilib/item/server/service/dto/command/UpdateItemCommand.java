@@ -4,12 +4,14 @@ import java.util.Date;
 
 public class UpdateItemCommand {
     private String title;
+    private String genre;
     private String author;
     private String publisher;
     private Date releaseDate;
 
-    public UpdateItemCommand(String title, String author, String publisher, Date releaseDate) {
+    public UpdateItemCommand(String title, String genre, String author, String publisher, Date releaseDate) {
         this.title = title;
+        this.genre = genre;
         this.author = author;
         this.publisher = publisher;
         this.releaseDate = releaseDate;
@@ -17,6 +19,10 @@ public class UpdateItemCommand {
 
     public String getTitle() {
         return title;
+    }
+
+    public String getGenre() {
+        return genre;
     }
 
     public String getAuthor() {
@@ -30,4 +36,6 @@ public class UpdateItemCommand {
     public Date getReleaseDate() {
         return releaseDate;
     }
+
+
 }

@@ -137,7 +137,7 @@ public class ItemCommandFacadeImplTest {
                 "J.R.R. Tolkien", "William Morrow & Company" ,Date.valueOf("2012-10-18"));
     }
     private UpdateItemCommand prepareUpdateTheHobbitCommand() {
-        return new UpdateItemCommand("The Hobbit: Or There and Back Again",
+        return new UpdateItemCommand("The Hobbit: Or There and Back Again", "Fantasy",
                 "J.R.R. Tolkien", "William Morrow & Company", Date.valueOf("2012-10-18"));
     }
 
@@ -156,6 +156,7 @@ public class ItemCommandFacadeImplTest {
     }
 
     private ItemSnapshot createInitializedSnapshot(CreateItemCommand command) {
-        return new ItemSnapshot(UUID.randomUUID().toString(), command.getISBN());
+        return new ItemSnapshot(UUID.randomUUID().toString(), command.getISBN(), command.getGenre(),
+                command.getTitle(), command.getAuthor(), command.getReleaseDate());
     }
 }
