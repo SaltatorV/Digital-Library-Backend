@@ -12,13 +12,13 @@ public enum Genre {
     BIOGRAPHY("Biography"),
     HISTORY("History");
 
-    private final String displayName;
+    private final String name;
 
-    Genre(String displayName) {
-        this.displayName = displayName;
+    Genre(String name) {
+        this.name = name;
     }
     public String getName() {
-        return displayName;
+        return name;
     }
 
 
