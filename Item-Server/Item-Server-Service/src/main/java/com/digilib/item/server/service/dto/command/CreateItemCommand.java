@@ -4,15 +4,15 @@ import java.util.Date;
 
 public class CreateItemCommand {
     private String ISBN;
-    private String category;
+    private String genre;
     private String title;
     private String author;
     private String publisher;
     private Date releaseDate;
 
-    public CreateItemCommand(String ISBN, String category, String title, String author, String publisher, Date releaseDate) {
+    public CreateItemCommand(String ISBN, String genre, String title, String author, String publisher, Date releaseDate) {
         this.ISBN = ISBN;
-        this.category = category;
+        this.genre = genre;
         this.title = title;
         this.author = author;
         this.publisher = publisher;
@@ -23,8 +23,8 @@ public class CreateItemCommand {
         return ISBN;
     }
 
-    public String getCategory() {
-        return category;
+    public String getGenre() {
+        return genre;
     }
 
     public String getTitle() {
