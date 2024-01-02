@@ -4,6 +4,7 @@ import com.digilib.item.server.domain.vo.ItemSnapshot;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.sql.Date;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -56,6 +57,7 @@ public class ItemRepositoryImplTest {
         assertTrue(response);
     }
     private ItemSnapshot prepareTheHobbitSnapshot() {
-        return new ItemSnapshot(UUID.randomUUID().toString(), "978-0547928227");
+        return new ItemSnapshot(UUID.randomUUID().toString(), "978-0547928227", "The Hobbit: Or There and Back Again", "Fantasy",
+                "J.R.R. Tolkien", "William Morrow & Company", Date.valueOf("2012-10-18"));
     }
 }
