@@ -58,7 +58,7 @@ class ItemCommandFacadeImpl implements ItemCommandFacade {
         ItemSnapshot snapshot = new ItemSnapshot(ISBN, command.getGenre(), command.getTitle(),
                 command.getAuthor(), command.getPublisher(), command.getReleaseDate());
 
-        repository.update(snapshot);
+        repository.save(snapshot);
 
         return MessageResponse.create("Item successfully updated!");
     }

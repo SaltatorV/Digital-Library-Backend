@@ -10,6 +10,4 @@ public interface ItemRepository {
     boolean existsByISBN(String ISBN);
 
     void delete(String isbn);
-
-    void update(ItemSnapshot snapshot);
 }
