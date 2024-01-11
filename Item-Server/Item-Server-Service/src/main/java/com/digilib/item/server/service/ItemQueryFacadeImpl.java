@@ -1,6 +1,7 @@
 package com.digilib.item.server.service;
 
 import com.digilib.item.server.domain.exception.ItemNotFoundException;
+import com.digilib.item.server.domain.vo.ItemSnapshot;
 import com.digilib.item.server.service.dto.response.ItemResponse;
 import com.digilib.item.server.service.dto.response.ItemSummaryResponse;
 import com.digilib.item.server.service.port.input.ItemQueryFacade;
@@ -22,13 +23,13 @@ class ItemQueryFacadeImpl implements ItemQueryFacade {
 
     @Override
     public ItemResponse findItem(String ISBN) {
-        Optional<String> ISBNFromDb = itemRepository.findByISBN(ISBN);
+        Optional<ItemSnapshot> snapshot = itemRepository.findByISBN(ISBN);
 
-        if(ISBNFromDb.isEmpty()) {
+        if(snapshot.isEmpty()) {
             throw new ItemNotFoundException();
         }
 
-        return ItemResponse.create(ISBNFromDb.get());
+        return ItemResponse.create(snapshot.get().getIsbn());
     }
 
     @Override

@@ -2,33 +2,27 @@ package com.digilib.item.server.service.dto.command;
 
 import java.util.Date;
 
-public class CreateItemCommand {
-    private String ISBN;
-    private String genre;
+public class UpdateItemCommand {
     private String title;
+    private String genre;
     private String author;
     private String publisher;
     private Date releaseDate;
 
-    public CreateItemCommand(String ISBN, String genre, String title, String author, String publisher, Date releaseDate) {
-        this.ISBN = ISBN;
-        this.genre = genre;
+    public UpdateItemCommand(String title, String genre, String author, String publisher, Date releaseDate) {
         this.title = title;
+        this.genre = genre;
         this.author = author;
         this.publisher = publisher;
         this.releaseDate = releaseDate;
     }
 
-    public String getISBN() {
-        return ISBN;
+    public String getTitle() {
+        return title;
     }
 
     public String getGenre() {
         return genre;
-    }
-
-    public String getTitle() {
-        return title;
     }
 
     public String getAuthor() {
@@ -42,4 +36,6 @@ public class CreateItemCommand {
     public Date getReleaseDate() {
         return releaseDate;
     }
+
+
 }

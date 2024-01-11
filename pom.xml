@@ -55,7 +55,12 @@
             <dependency>
                 <groupId>com.digilib.item.server.domain</groupId>
                 <artifactId>Item-Server-Domain</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
+                <version>${item-server.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.digilib.item.server.dataaccess</groupId>
+                <artifactId>Item-Server-Dataaccess</artifactId>
+                <version>${item-server.version}</version>
             </dependency>
 
             <dependency>

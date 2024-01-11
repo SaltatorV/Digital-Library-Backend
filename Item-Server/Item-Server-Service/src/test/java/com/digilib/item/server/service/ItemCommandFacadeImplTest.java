@@ -1,9 +1,13 @@
 package com.digilib.item.server.service;
 
 import com.digilib.item.server.domain.ItemDomainFacade;
+import com.digilib.item.server.domain.exception.ItemAlreadyExistsException;
+import com.digilib.item.server.domain.exception.ItemNotFoundException;
 import com.digilib.item.server.domain.vo.ItemSnapshot;
 import com.digilib.item.server.service.dto.command.CreateItemCommand;
 import com.digilib.item.server.service.dto.command.CreateItemDetailsCommand;
+import com.digilib.item.server.service.dto.command.UpdateItemCommand;
+import com.digilib.item.server.service.port.output.ItemRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -14,6 +18,7 @@ import java.sql.Date;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
 
@@ -22,6 +27,8 @@ public class ItemCommandFacadeImplTest {
 
     @Mock
     private ItemDomainFacade itemDomainFacade;
+    @Mock
+    private ItemRepository itemRepository;
     @InjectMocks
     private ItemCommandFacadeImpl itemCommandFacade;
 
@@ -30,6 +37,10 @@ public class ItemCommandFacadeImplTest {
         //given
         var command = prepareAddTheHobbitCommand();
         var snapshot = createInitializedSnapshot(command);
+
+        doReturn(false)
+                .when(itemRepository)
+                .existsByISBN(command.getISBN());
 
         doReturn(snapshot)
                 .when(itemDomainFacade)
@@ -43,9 +54,25 @@ public class ItemCommandFacadeImplTest {
     }
 
     @Test
+    public void shouldThrowItemAlreadyExistsExceptionWhenCreateItem() {
+        //given
+        var command = prepareAddTheHobbitCommand();
+
+        doReturn(true)
+                .when(itemRepository)
+                .existsByISBN(command.getISBN());
+
+        //when
+       assertThrows(ItemAlreadyExistsException.class, () -> itemCommandFacade.createItem(command));
+    }
+
+    @Test
     public void shouldDeleteItem() {
         //given
         var ISBN = createISBN();
+        doReturn(true)
+                .when(itemRepository)
+                .existsByISBN(ISBN);
 
         //when
         var result = itemCommandFacade.deleteItem(ISBN);
@@ -55,15 +82,41 @@ public class ItemCommandFacadeImplTest {
     }
 
     @Test
+    public void shouldThrowItemNotFoundExceptionWhenDeleteItem() {
+        //given
+        var ISBN = createISBN();
+        doReturn(false)
+                .when(itemRepository)
+                .existsByISBN(ISBN);
+
+        //when
+        assertThrows(ItemNotFoundException.class, () -> itemCommandFacade.deleteItem(ISBN));
+    }
+
+    @Test
     public void shouldUpdateItem() {
         //given
         var ISBN = createISBN();
+        var command = prepareUpdateTheHobbitCommand();
+
+        doReturn(true)
+                .when(itemRepository)
+                .existsByISBN(ISBN);
 
         //when
-        var result = itemCommandFacade.updateItem(ISBN);
+        var result = itemCommandFacade.updateItem(ISBN, command);
 
         //then
         assertEquals("Item successfully updated!", result.getMessage());
+    }
+
+    @Test
+    public void shouldThrowItemNotFoundExceptionWhenUpdateItem() {
+        //given
+        var ISBN = createISBN();
+        var command = prepareUpdateTheHobbitCommand();
+        //when
+        assertThrows(ItemNotFoundException.class, () -> itemCommandFacade.updateItem(ISBN, command));
     }
 
     @Test
@@ -80,7 +133,11 @@ public class ItemCommandFacadeImplTest {
     }
 
     private CreateItemCommand prepareAddTheHobbitCommand() {
-        return new CreateItemCommand("978-0547928227", "The Hobbit: Or There and Back Again",
+        return new CreateItemCommand("978-0547928227","Fantasy" ,"The Hobbit: Or There and Back Again",
+                "J.R.R. Tolkien", "William Morrow & Company" ,Date.valueOf("2012-10-18"));
+    }
+    private UpdateItemCommand prepareUpdateTheHobbitCommand() {
+        return new UpdateItemCommand("The Hobbit: Or There and Back Again", "Fantasy",
                 "J.R.R. Tolkien", "William Morrow & Company", Date.valueOf("2012-10-18"));
     }
 
@@ -99,6 +156,7 @@ public class ItemCommandFacadeImplTest {
     }
 
     private ItemSnapshot createInitializedSnapshot(CreateItemCommand command) {
-        return new ItemSnapshot(UUID.randomUUID().toString(), command.getISBN());
+        return new ItemSnapshot(UUID.randomUUID().toString(), command.getISBN(), command.getGenre(),
+                command.getTitle(), command.getAuthor(), command.getReleaseDate());
     }
 }
