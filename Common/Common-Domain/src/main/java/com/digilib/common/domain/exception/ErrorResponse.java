@@ -1,15 +1,15 @@
 package com.digilib.common.domain.exception;
 
 public class ErrorResponse {
-    private String code;
+    private int code;
     private String message;
 
-    public ErrorResponse(String code, String message) {
+    public ErrorResponse(int code, String message) {
         this.code = code;
         this.message = message;
     }
 
-    public String getCode() {
+    public int getCode() {
         return code;
     }
 
@@ -22,13 +22,13 @@ public class ErrorResponse {
     }
 
     public static final class ErrorResponseBuilder {
-        private String code;
+        private int code;
         private String message;
 
         private ErrorResponseBuilder() {
         }
 
-        public ErrorResponseBuilder withCode(String code) {
+        public ErrorResponseBuilder withCode(int code) {
             this.code = code;
             return this;
         }
