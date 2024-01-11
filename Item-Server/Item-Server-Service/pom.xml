@@ -39,6 +39,11 @@
             <groupId>com.digilib.item.server.domain</groupId>
             <artifactId>Item-Server-Domain</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
     </dependencies>
 
 </project>
