@@ -1,46 +1,38 @@
 package com.digilib.item.server.dataaccess.adapter;
 
+import com.digilib.item.server.dataaccess.mapper.ItemDatabaseMapper;
+import com.digilib.item.server.dataaccess.repository.ItemJpaRepository;
 import com.digilib.item.server.domain.vo.ItemSnapshot;
 import com.digilib.item.server.service.port.output.ItemRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
 @Service
+@RequiredArgsConstructor
 public class ItemRepositoryImpl implements ItemRepository {
 
-    Set<ItemSnapshot> snapshots = new HashSet<>();
+    private final ItemJpaRepository itemRepository;
+    private final ItemDatabaseMapper mapper;
 
     @Override
     public Optional<ItemSnapshot> findByISBN(String ISBN) {
-        return snapshots.stream()
-                .filter(snapshot -> snapshot.getIsbn().equals(ISBN))
-                .findFirst();
+        return itemRepository.findByIsbn(ISBN)
+                .map(mapper::mapItemEntityToSnapshot);
     }
 
     @Override
     public void save(ItemSnapshot snapshot) {
-        snapshots.add(snapshot);
+        itemRepository.save(mapper.mapItemSnapshotToEntity(snapshot));
     }
     @Override
     public boolean existsByISBN(String isbn) {
-        return snapshots
-                .stream()
-                .anyMatch(snapshot -> snapshot.getIsbn().equals(isbn));
+        return itemRepository.existsByIsbn(isbn);
     }
 
     @Override
     public void delete(String isbn) {
-        Optional<ItemSnapshot> toDelete = snapshots
-                .stream()
-                .filter(snapshot -> snapshot.getIsbn().equals(isbn))
-                .findFirst();
-
-        toDelete.ifPresent(snapshot -> snapshots.remove(snapshot));
-    }
-
-    @Override
-    public void update(ItemSnapshot snapshot) {
-
+       itemRepository.deleteByIsbn(isbn);
     }
 }
