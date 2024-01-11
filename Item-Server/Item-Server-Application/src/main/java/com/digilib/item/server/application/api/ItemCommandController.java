@@ -6,6 +6,7 @@ import com.digilib.item.server.service.dto.command.UpdateItemCommand;
 import com.digilib.item.server.service.dto.response.MessageResponse;
 import com.digilib.item.server.service.port.input.ItemCommandFacade;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -57,7 +58,9 @@ public class ItemCommandController {
             )
     })
     @DeleteMapping("{ISBN}")
-    public MessageResponse deleteItem(@PathVariable String ISBN) {
+    public MessageResponse deleteItem(
+            @Parameter(description = "Item ISBN", required = true)
+            @PathVariable String ISBN) {
         return itemCommandFacade.deleteItem(ISBN);
     }
 
@@ -76,7 +79,9 @@ public class ItemCommandController {
             )
     })
     @PatchMapping("{ISBN}")
-    public MessageResponse updateItem(@PathVariable String ISBN, @RequestBody UpdateItemCommand command) {
+    public MessageResponse updateItem(
+            @Parameter(description = "Item ISBN", required = true)
+            @PathVariable String ISBN, @RequestBody UpdateItemCommand command) {
         return itemCommandFacade.updateItem(ISBN, command);
     }
 
@@ -95,7 +100,10 @@ public class ItemCommandController {
             )
     })
     @PostMapping("{ISBN}/details")
-    public MessageResponse createItemDetails(@PathVariable String ISBN, @RequestBody CreateItemDetailsCommand command) {
+    public MessageResponse createItemDetails(
+            @Parameter(description = "Item ISBN", required = true)
+            @PathVariable String ISBN,
+            @RequestBody CreateItemDetailsCommand command) {
         return itemCommandFacade.createItemDetails(ISBN, command);
     }
 }
