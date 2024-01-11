@@ -34,8 +34,8 @@ public class ItemCommandController {
                     description = "HTTP status CREATED"
             ),
             @ApiResponse(
-                responseCode = "400",
-                description = "HTTP status BAD_REQUEST"
+                responseCode = "409",
+                description = "HTTP status CONFLICT"
             )
     })
     @PostMapping
@@ -53,8 +53,8 @@ public class ItemCommandController {
                     description = "HTTP status OK"
             ),
             @ApiResponse(
-                    responseCode = "400",
-                    description = "HTTP status BAD_REQUEST"
+                    responseCode = "404",
+                    description = "HTTP status NOT_FOUND"
             )
     })
     @DeleteMapping("{ISBN}")
@@ -74,8 +74,8 @@ public class ItemCommandController {
                     description = "HTTP status OK"
             ),
             @ApiResponse(
-                    responseCode = "400",
-                    description = "HTTP status BAD_REQUEST"
+                    responseCode = "404",
+                    description = "HTTP status NOT_FOUND"
             )
     })
     @PatchMapping("{ISBN}")
@@ -95,11 +95,11 @@ public class ItemCommandController {
                     description = "HTTP status OK"
             ),
             @ApiResponse(
-                    responseCode = "400",
-                    description = "HTTP status BAD_REQUEST"
+                    responseCode = "404",
+                    description = "HTTP status NOT_FOUND"
             )
     })
-    @PostMapping("{ISBN}/details")
+    @PutMapping("{ISBN}/details")
     public MessageResponse createItemDetails(
             @Parameter(description = "Item ISBN", required = true)
             @PathVariable String ISBN,
