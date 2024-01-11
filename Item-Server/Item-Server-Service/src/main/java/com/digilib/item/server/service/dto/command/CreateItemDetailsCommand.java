@@ -11,7 +11,7 @@ import lombok.Getter;
 public class CreateItemDetailsCommand {
     @Schema(description = "Quantity of items that will be available.", example = "5")
     private int quantity;
-    @Schema(description = "Item cover image")
+    @Schema(description = "Item cover image", example = "Byte array")
     private byte[] img;
     @Schema(description = "Width in millimeters", example = "100")
     private double width;
