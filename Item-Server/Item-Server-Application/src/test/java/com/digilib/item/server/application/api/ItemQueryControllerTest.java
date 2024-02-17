@@ -65,13 +65,10 @@ public class ItemQueryControllerTest {
     }
 
     private List<ItemSummaryResponse> createSummaryWith3Items() {
-        byte[] avatarBytes = Base64.getDecoder().decode("/9j/4AAQAAANAAAABAAEAA");
-
-
         return List.of(
-                ItemSummaryResponse.create("Title-1", "Author-1", avatarBytes),
-                ItemSummaryResponse.create("Title-2", "Author-2", avatarBytes),
-                ItemSummaryResponse.create("Title-3", "Author-3", avatarBytes)
+                ItemSummaryResponse.create("Title-1", "Author-1", "exampleLink1"),
+                ItemSummaryResponse.create("Title-2", "Author-2", "exampleLink2"),
+                ItemSummaryResponse.create("Title-3", "Author-3", "exampleLink3")
         );
     }
 }
