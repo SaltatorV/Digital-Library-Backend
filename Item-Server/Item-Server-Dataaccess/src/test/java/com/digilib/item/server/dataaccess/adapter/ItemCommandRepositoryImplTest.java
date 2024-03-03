@@ -16,7 +16,7 @@ public class ItemCommandRepositoryImplTest {
 
     @BeforeEach
     public void setup() {
-        repository = new ItemCommandRepositoryImpl();
+        repository = new ItemCommandRepositoryImpl(new Database());
     }
 
     @Test
@@ -29,19 +29,6 @@ public class ItemCommandRepositoryImplTest {
 
         //then
         assertTrue(repository.existsByISBN(snapshot.getIsbn()));
-    }
-
-    @Test
-    public void shouldFindItemByISBN (){
-        //given
-        var expected = prepareTheHobbitSnapshot();
-        repository.save(expected);
-
-        //when
-        var response = repository.findByISBN(expected.getIsbn());
-
-        //then
-        assertEquals(expected, response.get());
     }
 
     @Test

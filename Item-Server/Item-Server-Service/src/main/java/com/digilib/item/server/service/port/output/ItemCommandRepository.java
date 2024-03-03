@@ -5,7 +5,6 @@ import com.digilib.item.server.domain.vo.ItemSnapshot;
 import java.util.Optional;
 
 public interface ItemCommandRepository {
-    Optional<ItemSnapshot> findByISBN(String ISBN);
     void save(ItemSnapshot snapshot);
     boolean existsByISBN(String ISBN);
 
