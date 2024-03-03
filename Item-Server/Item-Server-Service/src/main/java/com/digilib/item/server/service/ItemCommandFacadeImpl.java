@@ -9,16 +9,16 @@ import com.digilib.item.server.service.dto.command.CreateItemDetailsCommand;
 import com.digilib.item.server.service.dto.command.UpdateItemCommand;
 import com.digilib.item.server.service.dto.response.MessageResponse;
 import com.digilib.item.server.service.port.input.ItemCommandFacade;
-import com.digilib.item.server.service.port.output.ItemRepository;
+import com.digilib.item.server.service.port.output.ItemCommandRepository;
 import org.springframework.stereotype.Service;
 
 @Service
 class ItemCommandFacadeImpl implements ItemCommandFacade {
 
     private final ItemDomainFacade itemDomainFacade;
-    private final ItemRepository repository;
+    private final ItemCommandRepository repository;
 
-    public ItemCommandFacadeImpl(ItemDomainFacade itemDomainFacade, ItemRepository repository) {
+    public ItemCommandFacadeImpl(ItemDomainFacade itemDomainFacade, ItemCommandRepository repository) {
         this.itemDomainFacade = itemDomainFacade;
         this.repository = repository;
     }

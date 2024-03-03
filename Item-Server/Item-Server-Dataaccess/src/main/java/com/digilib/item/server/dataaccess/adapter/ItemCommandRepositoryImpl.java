@@ -1,13 +1,13 @@
 package com.digilib.item.server.dataaccess.adapter;
 
 import com.digilib.item.server.domain.vo.ItemSnapshot;
-import com.digilib.item.server.service.port.output.ItemRepository;
+import com.digilib.item.server.service.port.output.ItemCommandRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
 @Service
-public class ItemRepositoryImpl implements ItemRepository {
+public class ItemCommandRepositoryImpl implements ItemCommandRepository {
 
     Set<ItemSnapshot> snapshots = new HashSet<>();
 

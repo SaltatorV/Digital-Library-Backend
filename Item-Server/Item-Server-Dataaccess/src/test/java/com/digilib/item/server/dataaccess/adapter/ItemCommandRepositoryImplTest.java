@@ -10,13 +10,13 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class ItemRepositoryImplTest {
+public class ItemCommandRepositoryImplTest {
 
-    private ItemRepositoryImpl repository;
+    private ItemCommandRepositoryImpl repository;
 
     @BeforeEach
     public void setup() {
-        repository = new ItemRepositoryImpl();
+        repository = new ItemCommandRepositoryImpl();
     }
 
     @Test

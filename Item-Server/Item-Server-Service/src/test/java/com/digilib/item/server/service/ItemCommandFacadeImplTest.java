@@ -7,7 +7,7 @@ import com.digilib.item.server.domain.vo.ItemSnapshot;
 import com.digilib.item.server.service.dto.command.CreateItemCommand;
 import com.digilib.item.server.service.dto.command.CreateItemDetailsCommand;
 import com.digilib.item.server.service.dto.command.UpdateItemCommand;
-import com.digilib.item.server.service.port.output.ItemRepository;
+import com.digilib.item.server.service.port.output.ItemCommandRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -28,7 +28,7 @@ public class ItemCommandFacadeImplTest {
     @Mock
     private ItemDomainFacade itemDomainFacade;
     @Mock
-    private ItemRepository itemRepository;
+    private ItemCommandRepository itemCommandRepository;
     @InjectMocks
     private ItemCommandFacadeImpl itemCommandFacade;
 
@@ -39,7 +39,7 @@ public class ItemCommandFacadeImplTest {
         var snapshot = createInitializedSnapshot(command);
 
         doReturn(false)
-                .when(itemRepository)
+                .when(itemCommandRepository)
                 .existsByISBN(command.getISBN());
 
         doReturn(snapshot)
@@ -59,7 +59,7 @@ public class ItemCommandFacadeImplTest {
         var command = prepareAddTheHobbitCommand();
 
         doReturn(true)
-                .when(itemRepository)
+                .when(itemCommandRepository)
                 .existsByISBN(command.getISBN());
 
         //when
@@ -71,7 +71,7 @@ public class ItemCommandFacadeImplTest {
         //given
         var ISBN = createISBN();
         doReturn(true)
-                .when(itemRepository)
+                .when(itemCommandRepository)
                 .existsByISBN(ISBN);
 
         //when
@@ -86,7 +86,7 @@ public class ItemCommandFacadeImplTest {
         //given
         var ISBN = createISBN();
         doReturn(false)
-                .when(itemRepository)
+                .when(itemCommandRepository)
                 .existsByISBN(ISBN);
 
         //when
@@ -100,7 +100,7 @@ public class ItemCommandFacadeImplTest {
         var command = prepareUpdateTheHobbitCommand();
 
         doReturn(true)
-                .when(itemRepository)
+                .when(itemCommandRepository)
                 .existsByISBN(ISBN);
 
         //when

@@ -2,7 +2,7 @@ package com.digilib.item.server.service;
 
 import com.digilib.item.server.domain.exception.ItemNotFoundException;
 import com.digilib.item.server.domain.vo.ItemSnapshot;
-import com.digilib.item.server.service.port.output.ItemRepository;
+import com.digilib.item.server.service.port.output.ItemQueryRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -22,7 +22,7 @@ import static org.mockito.Mockito.doReturn;
 public class ItemQueryFacadeImplTest {
 
     @Mock
-    private ItemRepository itemRepository;
+    private ItemQueryRepository itemQueryRepository;
     @InjectMocks
     private ItemQueryFacadeImpl itemQueryService;
 
@@ -31,7 +31,7 @@ public class ItemQueryFacadeImplTest {
         //given
         var snapshot = prepareTheHobbitSnapshot();
         doReturn(Optional.of(snapshot))
-                .when(itemRepository)
+                .when(itemQueryRepository)
                 .findByISBN(snapshot.getIsbn());
 
         //when
@@ -46,7 +46,7 @@ public class ItemQueryFacadeImplTest {
         //given
         String ISBN = createTheHobbitISBN();
         doReturn(Optional.empty())
-                .when(itemRepository)
+                .when(itemQueryRepository)
                 .findByISBN(ISBN);
 
         //when
