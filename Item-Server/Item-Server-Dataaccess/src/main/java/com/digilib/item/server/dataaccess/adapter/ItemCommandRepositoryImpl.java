@@ -9,34 +9,31 @@ import java.util.*;
 @Service
 public class ItemCommandRepositoryImpl implements ItemCommandRepository {
 
-    Set<ItemSnapshot> snapshots = new HashSet<>();
+    Database db;
 
-    @Override
-    public Optional<ItemSnapshot> findByISBN(String ISBN) {
-        return snapshots.stream()
-                .filter(snapshot -> snapshot.getIsbn().equals(ISBN))
-                .findFirst();
+    public ItemCommandRepositoryImpl(Database db) {
+        this.db = db;
     }
 
     @Override
     public void save(ItemSnapshot snapshot) {
-        snapshots.add(snapshot);
+        db.snapshots.add(snapshot);
     }
     @Override
     public boolean existsByISBN(String isbn) {
-        return snapshots
+        return db.snapshots
                 .stream()
                 .anyMatch(snapshot -> snapshot.getIsbn().equals(isbn));
     }
 
     @Override
     public void delete(String isbn) {
-        Optional<ItemSnapshot> toDelete = snapshots
+        Optional<ItemSnapshot> toDelete = db.snapshots
                 .stream()
                 .filter(snapshot -> snapshot.getIsbn().equals(isbn))
                 .findFirst();
 
-        toDelete.ifPresent(snapshot -> snapshots.remove(snapshot));
+        toDelete.ifPresent(snapshot -> db.snapshots.remove(snapshot));
     }
 
     @Override
