@@ -1,0 +1,7 @@
+services:
+  item-server:
+    container_name: Item-Server-Container
+    hostname: Item-Server
+    build:
+      context: ../../dockerfiles
+      dockerfile: Item-Server-Dockerfile
