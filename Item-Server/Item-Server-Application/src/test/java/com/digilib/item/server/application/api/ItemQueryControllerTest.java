@@ -9,7 +9,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Base64;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -23,7 +22,6 @@ public class ItemQueryControllerTest {
 
     @InjectMocks
     private ItemQueryController itemQueryController;
-
 
     @Test
     public void shouldReturnSameISBN() {
@@ -54,7 +52,6 @@ public class ItemQueryControllerTest {
         //then
         assertEquals(items, response);
     }
-
 
     private String createISBN() {
         return "978-83-644-7691-4";
