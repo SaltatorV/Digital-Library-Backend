@@ -32,6 +32,11 @@
             <groupId>com.digilib.item.server.service</groupId>
             <artifactId>Item-Server-Service</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

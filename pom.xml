@@ -37,6 +37,7 @@
         <spring-boot-starter.version>3.2.1</spring-boot-starter.version>
         <mockito-core.version>5.7.0</mockito-core.version>
         <spring-doc.version>2.3.0</spring-doc.version>
+        <liquibase-core.version>4.26.0</liquibase-core.version>
 
         <maven-surefire-plugin.version>3.2.3</maven-surefire-plugin.version>
     </properties>
@@ -102,6 +103,11 @@
                 <groupId>org.springdoc</groupId>
                 <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
                 <version>${spring-doc.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.liquibase</groupId>
+                <artifactId>liquibase-core</artifactId>
+                <version>${liquibase-core.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
