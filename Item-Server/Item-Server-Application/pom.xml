@@ -31,6 +31,11 @@
             <groupId>com.digilib.common.application</groupId>
             <artifactId>Common-Application</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-api</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

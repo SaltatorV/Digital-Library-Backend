@@ -36,6 +36,7 @@
 
         <spring-boot-starter.version>3.2.1</spring-boot-starter.version>
         <mockito-core.version>5.7.0</mockito-core.version>
+        <spring-doc.version>2.3.0</spring-doc.version>
 
         <maven-surefire-plugin.version>3.2.3</maven-surefire-plugin.version>
     </properties>
@@ -79,24 +80,28 @@
                 <artifactId>spring-boot-starter</artifactId>
                 <version>${spring-boot-starter.version}</version>
             </dependency>
-
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-web</artifactId>
                 <version>${spring-boot-starter.version}</version>
             </dependency>
-
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-test</artifactId>
                 <version>${spring-boot-starter.version}</version>
                 <scope>test</scope>
             </dependency>
+
             <dependency>
                 <groupId>org.mockito</groupId>
                 <artifactId>mockito-core</artifactId>
                 <version>${mockito-core.version}</version>
                 <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-starter-webmvc-api</artifactId>
+                <version>${spring-doc.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
