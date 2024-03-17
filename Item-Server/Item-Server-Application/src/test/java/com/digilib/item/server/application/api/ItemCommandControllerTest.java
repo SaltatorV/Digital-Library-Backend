@@ -1,5 +1,8 @@
 package com.digilib.item.server.application.api;
 
+import com.digilib.item.server.application.builder.CreateItemCommandBuilder;
+import com.digilib.item.server.application.builder.CreateItemDetailsCommandBuilder;
+import com.digilib.item.server.application.builder.UpdateItemCommandBuilder;
 import com.digilib.item.server.service.dto.command.CreateItemCommand;
 import com.digilib.item.server.service.dto.command.CreateItemDetailsCommand;
 import com.digilib.item.server.service.dto.command.UpdateItemCommand;
@@ -10,8 +13,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.sql.Date;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.doReturn;
@@ -26,97 +27,141 @@ public class ItemCommandControllerTest {
 
     @Test
     public void shouldSaveNewItem() {
-
         //given
-        var command = prepareAddTheHobbitCommand();
-        var expected = createResponseWithMessage("Item successfully created!");
-        doReturn(expected)
-                .when(itemCommandFacade)
-                .createItem(command);
+        var command = buildCreateItemCommand()
+                .withISBN("978-0547928227")
+                .withGenre("Fantasy")
+                .withTitle("The Hobbit: Or There and Back Again")
+                .withAuthor("J.R.R. Tolkien")
+                .withPublisher("William Morrow & Company")
+                .withReleaseDateInFormatDDMMYYYY("18102012")
+                .create();
+
+        returnMessageFromFacade("Item successfully created!", command);
+
 
         //when
-        var response = itemCommandController.saveItem(command);
+        var response = saveItem(command);
 
         //then
-        assertEquals(expected, response);
+        assertResponseMessageIs(response, "Item successfully created!");
     }
 
     @Test
     public void shouldDeleteItem() {
         //given
-        var ISBN = createISBN();
-        var expected = createResponseWithMessage("Item successfully deleted!");
-        doReturn(expected)
-                .when(itemCommandFacade)
-                .deleteItem(ISBN);
+        var ISBN = "978-0547928227";
+
+        returnMessageFromFacade("Item successfully deleted!", ISBN);
 
         //when
-        var response = itemCommandController.deleteItem(ISBN);
+        var response = deleteItem(ISBN);
 
         //then
-        assertEquals(expected, response);
+        assertResponseMessageIs(response, "Item successfully deleted!");
     }
 
     @Test
     public void shouldUpdateItem() {
 
         //given
-        var ISBN = createISBN();
-        var command = prepareUpdateTheHobbitCommand();
-        var expected = createResponseWithMessage("Item successfully updated!");
-        doReturn(expected)
-                .when(itemCommandFacade)
-                .updateItem(ISBN, command);
+        var ISBN = "978-0547928227";
+        var command = buildUpdateItemCommand()
+                .withGenre("Fantasy")
+                .withTitle("The Hobbit: Or There and Back Again")
+                .withAuthor("J.R.R. Tolkien")
+                .withPublisher("William Morrow & Company")
+                .withReleaseDateInFormatDDMMYYYY("18102012")
+                .create();
+
+        returnMessageFromFacade("Item successfully updated!", ISBN, command);
+
         //when
-        var response = itemCommandController.updateItem(ISBN, command);
+        var response = updateItem(ISBN, command);
 
         //then
-        assertEquals(expected, response);
+        assertResponseMessageIs(response, "Item successfully updated!");
     }
 
     @Test
     public void shouldCreateItemDetails() {
         //given
-        var ISBN = createISBN();
-        var command = prepareItemDetails();
-        var expected = createResponseWithMessage("Item details successfully bounded!");
+        var ISBN = "978-0547928227";
+        var command = buildCreateItemDetailsCommand()
+                .withQuantity(1)
+                .withDefaultImg()
+                .withWidth(145)
+                .withHeight(220)
+                .withThickness(30)
+                .create();
 
-        doReturn(expected)
-                .when(itemCommandFacade)
-                .createItemDetails(ISBN, command);
+        returnMessageFromFacade("Item details successfully bounded!", ISBN, command);
+
 
         //when
-        var response = itemCommandController.createItemDetails(ISBN, command);
+        var response = createItemDetails(ISBN, command);
 
         //then
-        assertEquals(expected, response);
+        assertResponseMessageIs(response, "Item details successfully bounded!");
     }
 
-    public String createISBN() {
-        return "0-061-96436-0";
+    private MessageResponse saveItem(CreateItemCommand command) {
+        return itemCommandController.saveItem(command);
     }
 
-    private CreateItemCommand prepareAddTheHobbitCommand() {
-        return new CreateItemCommand("978-0547928227", "Fantasy" ,"The Hobbit: Or There and Back Again",
-                "J.R.R. Tolkien", "William Morrow & Company", Date.valueOf("2012-10-18"));
+    private MessageResponse deleteItem(String ISBN) {
+        return itemCommandController.deleteItem(ISBN);
     }
 
-    private UpdateItemCommand prepareUpdateTheHobbitCommand() {
-        return new UpdateItemCommand("The Hobbit: Or There and Back Again", "Fantasy",
-                "J.R.R. Tolkien", "William Morrow & Company", Date.valueOf("2012-10-18"));
+    private MessageResponse updateItem(String ISBN, UpdateItemCommand command){
+        return itemCommandController.updateItem(ISBN, command);
     }
 
-    private CreateItemDetailsCommand prepareItemDetails() {
-        int quantity = 1;
-        byte[] img = {0,1,0,1,1,1,1};
-        double widthInMM = 133.4;
-        double heightInMM = 215.9;
-        double thicknessInMM = 25.4;
+    private MessageResponse createItemDetails(String ISBN, CreateItemDetailsCommand command){
+        return itemCommandController.createItemDetails(ISBN, command);
+    }
 
-        return new CreateItemDetailsCommand(quantity, img, widthInMM, heightInMM, thicknessInMM);
+    private CreateItemCommandBuilder buildCreateItemCommand(){
+        return CreateItemCommandBuilder.build();
+    }
+
+    private UpdateItemCommandBuilder buildUpdateItemCommand(){
+        return UpdateItemCommandBuilder.build();
+    }
+
+    private CreateItemDetailsCommandBuilder buildCreateItemDetailsCommand(){
+        return CreateItemDetailsCommandBuilder.build();
+    }
+
+    private void returnMessageFromFacade(String message, CreateItemCommand command) {
+        doReturn(createResponseWithMessage(message))
+                .when(itemCommandFacade)
+                .createItem(command);
+    }
+
+    private void returnMessageFromFacade(String message, String ISBN) {
+        doReturn(createResponseWithMessage(message))
+                .when(itemCommandFacade)
+                .deleteItem(ISBN);;
+    }
+
+    private void returnMessageFromFacade(String message, String ISBN, UpdateItemCommand command) {
+        doReturn(createResponseWithMessage(message))
+                .when(itemCommandFacade)
+                .updateItem(ISBN, command);
+    }
+
+    private void returnMessageFromFacade(String message, String ISBN, CreateItemDetailsCommand command) {
+        doReturn(createResponseWithMessage(message))
+                .when(itemCommandFacade)
+                .createItemDetails(ISBN, command);
     }
 
     private MessageResponse createResponseWithMessage(String message) {
         return MessageResponse.create(message);
+    }
+
+    private void assertResponseMessageIs(MessageResponse response, String expectedMessage) {
+        assertEquals(expectedMessage, response.getMessage());
     }
 }
