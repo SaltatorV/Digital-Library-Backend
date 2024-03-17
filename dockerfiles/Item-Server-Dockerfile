@@ -1,5 +1,0 @@
-FROM openjdk:17.0.2-jdk-slim
-ARG JAR_FILE=jars/Item-Server.jar
-EXPOSE 8080
-COPY ${JAR_FILE} Item-Server.jar
-ENTRYPOINT ["java","-jar","/Item-Server.jar"]

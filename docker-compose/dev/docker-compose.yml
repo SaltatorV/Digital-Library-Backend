@@ -1,7 +1,13 @@
 services:
   item-server:
-    container_name: Item-Server-Container
-    hostname: Item-Server
+    container_name: item-server-container
+    hostname: item-server
     build:
-      context: ../../dockerfiles
-      dockerfile: Item-Server-Dockerfile
+      context: ../../artifactory
+      dockerfile: /dockerfiles/item-server-dockerfile
+
+  item-server-db:
+    image: mysql:latest
+    container_name: item-server-db
+    restart: always
+    env_file: "../../artifactory/env/item-server-db.env"
