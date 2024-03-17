@@ -13,7 +13,7 @@ public class ItemServerDomainExceptionHandlerTest {
     @Test
     public void testHandleError() {
         //given
-        ItemServerDomainException exception = createDomainException("Example error message");
+        var exception = createDomainException("Example error message");
 
         //when
         handleException(exception);
