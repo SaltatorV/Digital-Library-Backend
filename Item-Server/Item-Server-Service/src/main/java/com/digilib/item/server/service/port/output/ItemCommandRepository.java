@@ -6,9 +6,7 @@ import java.util.Optional;
 
 public interface ItemCommandRepository {
     void save(ItemSnapshot snapshot);
-    boolean existsByISBN(String ISBN);
-
     void delete(String isbn);
-
     void update(ItemSnapshot snapshot);
+    Optional<ItemSnapshot> findByISBN(String isbn);
 }

@@ -15,6 +15,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.sql.Date;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -38,9 +39,9 @@ public class ItemCommandFacadeImplTest {
         var command = prepareAddTheHobbitCommand();
         var snapshot = createInitializedSnapshot(command);
 
-        doReturn(false)
+        doReturn(Optional.of(snapshot))
                 .when(itemCommandRepository)
-                .existsByISBN(command.getISBN());
+                .findByISBN(command.getISBN());
 
         doReturn(snapshot)
                 .when(itemDomainFacade)
@@ -57,11 +58,10 @@ public class ItemCommandFacadeImplTest {
     public void shouldThrowItemAlreadyExistsExceptionWhenCreateItem() {
         //given
         var command = prepareAddTheHobbitCommand();
-
-        doReturn(true)
+        var snapshot = createInitializedSnapshot(command);
+        doReturn(Optional.of(snapshot))
                 .when(itemCommandRepository)
-                .existsByISBN(command.getISBN());
-
+                .findByISBN(command.getISBN());
         //when
        assertThrows(ItemAlreadyExistsException.class, () -> itemCommandFacade.createItem(command));
     }
@@ -70,9 +70,11 @@ public class ItemCommandFacadeImplTest {
     public void shouldDeleteItem() {
         //given
         var ISBN = createISBN();
-        doReturn(true)
+        var command = prepareAddTheHobbitCommand();
+        var snapshot = createInitializedSnapshot(command);
+        doReturn(Optional.of(snapshot))
                 .when(itemCommandRepository)
-                .existsByISBN(ISBN);
+                .findByISBN(command.getISBN());
 
         //when
         var result = itemCommandFacade.deleteItem(ISBN);
@@ -85,9 +87,9 @@ public class ItemCommandFacadeImplTest {
     public void shouldThrowItemNotFoundExceptionWhenDeleteItem() {
         //given
         var ISBN = createISBN();
-        doReturn(false)
+        doReturn(Optional.empty())
                 .when(itemCommandRepository)
-                .existsByISBN(ISBN);
+                .findByISBN(ISBN);
 
         //when
         assertThrows(ItemNotFoundException.class, () -> itemCommandFacade.deleteItem(ISBN));
@@ -98,10 +100,11 @@ public class ItemCommandFacadeImplTest {
         //given
         var ISBN = createISBN();
         var command = prepareUpdateTheHobbitCommand();
-
-        doReturn(true)
+        var command2 = prepareAddTheHobbitCommand();
+        var snapshot = createInitializedSnapshot(command2);
+        doReturn(Optional.of(snapshot))
                 .when(itemCommandRepository)
-                .existsByISBN(ISBN);
+                .findByISBN(ISBN);
 
         //when
         var result = itemCommandFacade.updateItem(ISBN, command);
