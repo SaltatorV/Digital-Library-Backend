@@ -5,20 +5,20 @@ import java.util.Objects;
 
 public class ItemSnapshot {
     private String id;
-    private String isbn;
+    private String ISBN;
     private String genre;
     private String title;
     private String author;
     private String publisher;
     private Date releaseDate;
 
-    public ItemSnapshot(String id, String isbn, String genre, String title, String author, String publisher, Date releaseDate) {
-        this(isbn, genre, title, author, publisher, releaseDate);
+    public ItemSnapshot(String id, String ISBN, String genre, String title, String author, String publisher, Date releaseDate) {
+        this(ISBN, genre, title, author, publisher, releaseDate);
         this.id = id;
     }
 
-    public ItemSnapshot(String isbn, String genre, String title, String author, String publisher, Date releaseDate) {
-        this.isbn = isbn;
+    public ItemSnapshot(String ISBN, String genre, String title, String author, String publisher, Date releaseDate) {
+        this.ISBN = ISBN;
         this.genre = genre;
         this.title = title;
         this.author = author;
@@ -31,7 +31,7 @@ public class ItemSnapshot {
     }
 
     public String getIsbn() {
-        return isbn;
+        return ISBN;
     }
 
     public String getGenre() {
@@ -59,11 +59,11 @@ public class ItemSnapshot {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ItemSnapshot snapshot = (ItemSnapshot) o;
-        return Objects.equals(id, snapshot.id) && Objects.equals(isbn, snapshot.isbn);
+        return Objects.equals(id, snapshot.id) && Objects.equals(ISBN, snapshot.ISBN);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, isbn);
+        return Objects.hash(id, ISBN);
     }
 }

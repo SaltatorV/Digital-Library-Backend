@@ -1,50 +1,166 @@
 package com.digilib.item.server.dataaccess.adapter;
 
+import com.digilib.item.server.dataaccess.builder.ItemSnapshotBuilder;
 import com.digilib.item.server.domain.vo.ItemSnapshot;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.sql.Date;
+import java.util.Optional;
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ItemCommandRepositoryImplTest {
-
+    private Database db;
     private ItemCommandRepositoryImpl repository;
 
     @BeforeEach
     public void setup() {
-        repository = new ItemCommandRepositoryImpl(new Database());
+        db = new Database();
+        repository = new ItemCommandRepositoryImpl(db);
     }
 
     @Test
     public void shouldSaveItemSnapshot() {
         //given
-        var snapshot = prepareTheHobbitSnapshot();
+        var snapshot = buildSnapshot()
+                .withId(UUID.randomUUID().toString())
+                .withISBN("978-0547928227")
+                .withGenre("Fantasy")
+                .withTitle("The Hobbit: Or There and Back Again")
+                .withAuthor("J.R.R. Tolkien")
+                .withPublisher("William Morrow & Company")
+                .withReleaseDateInFormatDDMMYYYY("18102012")
+                .create();
 
         //when
-        repository.save(snapshot);
+        saveSnapshot(snapshot);
+
 
         //then
-        assertTrue(repository.existsByISBN(snapshot.getIsbn()));
+        assertSnapshotExists(snapshot);
     }
 
     @Test
-    public void shouldReturnTrueWhenExistByIsbn() {
+    public void shouldDeleteItemSnapshot() {
         //given
-        var expected = prepareTheHobbitSnapshot();
-        repository.save(expected);
+        var snapshot = buildSnapshot()
+                .withId(UUID.randomUUID().toString())
+                .withISBN("978-0547928227")
+                .withGenre("Fantasy")
+                .withTitle("The Hobbit: Or There and Back Again")
+                .withAuthor("J.R.R. Tolkien")
+                .withPublisher("William Morrow & Company")
+                .withReleaseDateInFormatDDMMYYYY("18102012")
+                .create();
+
+        saveSnapshot(snapshot);
 
         //when
-        var response = repository.existsByISBN(expected.getIsbn());
+        deleteSnapshot("978-0547928227");
 
         //then
-        assertTrue(response);
+        assertSnapshotNotExists(snapshot);
     }
-    private ItemSnapshot prepareTheHobbitSnapshot() {
-        return new ItemSnapshot(UUID.randomUUID().toString(), "978-0547928227", "The Hobbit: Or There and Back Again", "Fantasy",
-                "J.R.R. Tolkien", "William Morrow & Company", Date.valueOf("2012-10-18"));
+
+    @Test
+    public void shouldUpdateSnapshot() {
+        //given
+        var oldSnapshot = buildSnapshot()
+                .withId(UUID.randomUUID().toString())
+                .withISBN("978-0547928227")
+                .withGenre("Typo")
+                .withTitle("The Hobbit: Or There and Back Again")
+                .withAuthor("J.R.R. Tolkien")
+                .withPublisher("William Morrow & Company")
+                .withReleaseDateInFormatDDMMYYYY("18102012")
+                .create();
+
+        saveSnapshot(oldSnapshot);
+
+        var newSnapshot = buildSnapshot()
+                .withId(UUID.randomUUID().toString())
+                .withISBN("978-0547928227")
+                .withGenre("Fantasy")
+                .withTitle("The Hobbit: Or There and Back Again")
+                .withAuthor("J.R.R. Tolkien")
+                .withPublisher("William Morrow & Company")
+                .withReleaseDateInFormatDDMMYYYY("18102012")
+                .create();
+
+        //when
+        updateSnapshot(newSnapshot);
+
+        //then
+        assertSnapshotNotExists(oldSnapshot);
+        assertSnapshotExists(newSnapshot);
     }
+
+    @Test
+    public void shouldFindSnapshotByISBN() {
+        //given
+        var snapshot = buildSnapshot()
+                .withId(UUID.randomUUID().toString())
+                .withISBN("978-0547928227")
+                .withGenre("Fantasy")
+                .withTitle("The Hobbit: Or There and Back Again")
+                .withAuthor("J.R.R. Tolkien")
+                .withPublisher("William Morrow & Company")
+                .withReleaseDateInFormatDDMMYYYY("18102012")
+                .create();
+
+        saveSnapshot(snapshot);
+
+        //when
+        var found = findSnapshot("978-0547928227");
+
+        //then
+        assertSnapshotIsFound(found);
+    }
+
+    @Test
+    public void shouldNotFindSnapshotByISBN() {
+        //given
+
+        //when
+        var found = findSnapshot("978-0547928227");
+
+        //then
+        assertSnapshotIsNotFound(found);
+    }
+
+    private ItemSnapshotBuilder buildSnapshot() {
+        return ItemSnapshotBuilder.build();
+    }
+
+    private void saveSnapshot(ItemSnapshot snapshot) {
+        repository.save(snapshot);
+    }
+    private void deleteSnapshot(String ISBN) {
+        repository.delete(ISBN);
+    }
+    private void updateSnapshot(ItemSnapshot snapshot) {
+        repository.update(snapshot);
+    }
+
+    private Optional<ItemSnapshot> findSnapshot(String ISBN) {
+        return repository.findByISBN(ISBN);
+    }
+
+    private void assertSnapshotExists(ItemSnapshot snapshot) {
+        assertTrue(db.snapshots.contains(snapshot));
+    }
+
+    private void assertSnapshotNotExists(ItemSnapshot snapshot) {
+        assertFalse(db.snapshots.contains(snapshot));
+    }
+
+    private void assertSnapshotIsFound(Optional<ItemSnapshot> found) {
+        assertTrue(found.isPresent());
+    }
+
+    private void assertSnapshotIsNotFound(Optional<ItemSnapshot> found) {
+        assertTrue(found.isEmpty());
+    }
+
 }

@@ -19,12 +19,6 @@ public class ItemCommandRepositoryImpl implements ItemCommandRepository {
     public void save(ItemSnapshot snapshot) {
         db.snapshots.add(snapshot);
     }
-    @Override
-    public boolean existsByISBN(String isbn) {
-        return db.snapshots
-                .stream()
-                .anyMatch(snapshot -> snapshot.getIsbn().equals(isbn));
-    }
 
     @Override
     public void delete(String isbn) {
@@ -38,6 +32,12 @@ public class ItemCommandRepositoryImpl implements ItemCommandRepository {
 
     @Override
     public void update(ItemSnapshot snapshot) {
+        db.snapshots.removeIf(s -> s.getIsbn().equals(snapshot.getIsbn()));
+        db.snapshots.add(snapshot);
+    }
 
+    @Override
+    public Optional<ItemSnapshot> findByISBN(String ISBN) {
+        return db.snapshots.stream().filter(snapshot -> snapshot.getIsbn().equals(ISBN)).findFirst();
     }
 }
