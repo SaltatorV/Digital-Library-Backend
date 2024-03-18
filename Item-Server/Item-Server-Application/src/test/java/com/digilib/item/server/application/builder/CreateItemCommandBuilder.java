@@ -7,12 +7,16 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class CreateItemCommandBuilder {
-    public String ISBN;
-    public String genre;
-    public String title;
-    public String author;
-    public String publisher;
-    public Date releaseDate;
+    private String ISBN;
+    private String genre;
+    private String title;
+    private String author;
+    private String publisher;
+    private Date releaseDate;
+
+    private CreateItemCommandBuilder() {
+    }
+
     public static CreateItemCommandBuilder build() {
         return new CreateItemCommandBuilder();
     }

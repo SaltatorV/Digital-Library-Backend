@@ -26,7 +26,7 @@ public class ItemQueryControllerTest {
     @Test
     public void shouldReturnSameISBN() {
         //given
-        String ISBN = createISBN();
+        var ISBN = "978-0547928227";
         doReturn(createItemResponse(ISBN))
                 .when(itemQueryFacade)
                 .findItem(ISBN);

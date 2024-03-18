@@ -1,6 +1,5 @@
 package com.digilib.item.server.application.builder;
 
-import com.digilib.item.server.service.dto.command.CreateItemCommand;
 import com.digilib.item.server.service.dto.command.UpdateItemCommand;
 
 import java.text.ParseException;
@@ -8,11 +7,15 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class UpdateItemCommandBuilder {
-    public String genre;
-    public String title;
-    public String author;
-    public String publisher;
-    public Date releaseDate;
+    private String genre;
+    private String title;
+    private String author;
+    private String publisher;
+    private Date releaseDate;
+
+    private UpdateItemCommandBuilder() {
+    }
+
     public static UpdateItemCommandBuilder build() {
         return new UpdateItemCommandBuilder();
     }

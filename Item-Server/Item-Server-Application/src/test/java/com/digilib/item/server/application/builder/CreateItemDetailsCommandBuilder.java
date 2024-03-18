@@ -1,11 +1,6 @@
 package com.digilib.item.server.application.builder;
 
 import com.digilib.item.server.service.dto.command.CreateItemDetailsCommand;
-import com.digilib.item.server.service.dto.command.UpdateItemCommand;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class CreateItemDetailsCommandBuilder {
     private int quantity;
@@ -13,6 +8,10 @@ public class CreateItemDetailsCommandBuilder {
     private double width;
     private double height;
     private double thickness;
+
+    private CreateItemDetailsCommandBuilder() {
+    }
+
     public static CreateItemDetailsCommandBuilder build() {
         return new CreateItemDetailsCommandBuilder();
     }
