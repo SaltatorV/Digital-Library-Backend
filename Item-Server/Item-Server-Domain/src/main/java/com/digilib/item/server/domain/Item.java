@@ -1,13 +1,13 @@
 package com.digilib.item.server.domain;
 
+import com.digilib.common.domain.aggregate.AggregateRoot;
 import com.digilib.item.server.domain.vo.Genre;
 import com.digilib.item.server.domain.vo.ItemId;
 import com.digilib.item.server.domain.vo.ItemSnapshot;
 
 import java.util.Date;
 
-class Item {
-    private final ItemId id;
+class Item extends AggregateRoot<ItemId> {
     private final String isbn;
     private Genre genre;
     private String title;
@@ -16,7 +16,7 @@ class Item {
     private Date releaseDate;
 
     public Item(ItemId id, String isbn, Genre genre, String title, String author, String publisher, Date releaseDate) {
-        this.id = id;
+        super(id);
         this.isbn = isbn;
         this.genre = genre;
         this.title = title;
@@ -31,7 +31,7 @@ class Item {
     }
 
     public ItemSnapshot createSnapshot() {
-        return new ItemSnapshot(id.getId(), isbn, genre.toString(), title, author, publisher, releaseDate);
+        return new ItemSnapshot(getId(), isbn, genre.toString(), title, author, publisher, releaseDate);
     }
 
     private static Genre createGenre(String genre) {

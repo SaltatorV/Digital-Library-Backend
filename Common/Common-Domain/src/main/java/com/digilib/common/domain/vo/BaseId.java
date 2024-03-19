@@ -1,29 +1,28 @@
 package com.digilib.common.domain.vo;
 
 import java.util.Objects;
-import java.util.UUID;
 
-public abstract class BaseId {
-    private final UUID id;
+public class BaseId<T> {
+    private final T value;
 
-    public BaseId(UUID id) {
-        this.id = id;
+    protected BaseId(T value) {
+        this.value = value;
     }
 
-    public String getId() {
-        return id.toString();
+    public String getValue() {
+        return value.toString();
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        BaseId baseId = (BaseId) o;
-        return Objects.equals(id, baseId.id);
+        BaseId<?> baseId = (BaseId<?>) o;
+        return value.equals(baseId.value);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(value);
     }
 }
