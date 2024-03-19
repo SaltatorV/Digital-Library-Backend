@@ -73,6 +73,6 @@ class ItemCommandFacadeImpl implements ItemCommandFacade {
     }
 
     private boolean isbnNotExists(String ISBN) {
-        return !isbnExists(ISBN);
+        return repository.findByISBN(ISBN).isEmpty();
     }
 }

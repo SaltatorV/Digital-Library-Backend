@@ -13,7 +13,7 @@ public class ItemIdTest {
         var id = ItemId.generate();
 
         //then
-        assertNotNull(id.getId());
+        assertNotNull(id.getValue());
     }
 
     @Test
@@ -25,6 +25,6 @@ public class ItemIdTest {
         var itemId = ItemId.restore(expected);
 
         //then
-        assertEquals(expected, itemId.getId());
+        assertEquals(expected, itemId.getValue());
     }
 }

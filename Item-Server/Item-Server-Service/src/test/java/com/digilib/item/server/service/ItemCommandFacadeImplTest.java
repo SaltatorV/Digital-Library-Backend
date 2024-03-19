@@ -39,7 +39,7 @@ public class ItemCommandFacadeImplTest {
         var command = prepareAddTheHobbitCommand();
         var snapshot = createInitializedSnapshot(command);
 
-        doReturn(Optional.of(snapshot))
+        doReturn(Optional.empty())
                 .when(itemCommandRepository)
                 .findByISBN(command.getISBN());
 
@@ -74,7 +74,7 @@ public class ItemCommandFacadeImplTest {
         var snapshot = createInitializedSnapshot(command);
         doReturn(Optional.of(snapshot))
                 .when(itemCommandRepository)
-                .findByISBN(command.getISBN());
+                .findByISBN(ISBN);
 
         //when
         var result = itemCommandFacade.deleteItem(ISBN);
