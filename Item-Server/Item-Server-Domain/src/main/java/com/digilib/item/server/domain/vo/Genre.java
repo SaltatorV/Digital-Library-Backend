@@ -21,5 +21,9 @@ public enum Genre {
         return name;
     }
 
+    public static Genre createFrom(String genre) {
+        return Genre.valueOf(genre.toUpperCase());
+    }
+
 
 }

@@ -17,4 +17,16 @@ public class GenreTest {
         //then
         assertEquals("History", name);
     }
+
+    @Test
+    public void shouldCreateGenreFrom() {
+        //given
+        var name = "fantasy";
+
+        //when
+        var genre = Genre.createFrom(name);
+
+        //then
+        assertEquals(Genre.FANTASY, genre);
+    }
 }
