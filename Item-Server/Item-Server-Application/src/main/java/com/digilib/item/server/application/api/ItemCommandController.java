@@ -5,16 +5,14 @@ import com.digilib.item.server.service.dto.command.CreateItemDetailsCommand;
 import com.digilib.item.server.service.dto.command.UpdateItemCommand;
 import com.digilib.item.server.service.dto.response.MessageResponse;
 import com.digilib.item.server.service.port.input.ItemCommandFacade;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/items")
+@RequiredArgsConstructor
 public class ItemCommandController {
     private final ItemCommandFacade itemCommandFacade;
-
-    public ItemCommandController(ItemCommandFacade itemCommandFacade) {
-        this.itemCommandFacade = itemCommandFacade;
-    }
 
     @PostMapping
     public MessageResponse saveItem(@RequestBody CreateItemCommand command) {
