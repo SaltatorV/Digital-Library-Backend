@@ -25,5 +25,4 @@ public enum Genre {
         return Genre.valueOf(genre.toUpperCase());
     }
 
-
 }

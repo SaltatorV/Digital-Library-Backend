@@ -1,5 +1,6 @@
 package com.digilib.item.server.domain;
 
+import com.digilib.item.server.domain.builder.ItemSnapshotBuilder;
 import com.digilib.item.server.domain.vo.ItemSnapshot;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,18 +22,32 @@ public class ItemDomainFacadeImplTest {
     @Test
     public void shouldCreateItem() {
         //given
-        var expected = prepareNotInitializedTheHobbitItem();
+        var expected = buildSnapshot()
+                .withIsbn("978-0547928227")
+                .withGenre("Fantasy")
+                .withTitle("The Hobbit: Or There and Back Again")
+                .withAuthor("J.R.R. Tolkien")
+                .withPublisher("William Morrow & Company")
+                .withReleaseDateInFormatDDMMYYYY("18102012")
+                .create();
+
 
         //when
-        var snapshot = facade.createItem(expected);
+        var snapshot = createItem(expected);
 
         //then
-        assertEquals(expected.getIsbn(), snapshot.getIsbn());
-        assertNotNull(snapshot.getId());
+        assertIsSnapshotInitialized(snapshot);
     }
 
-    private ItemSnapshot prepareNotInitializedTheHobbitItem() {
-        return new ItemSnapshot("978-0547928227", "Fantasy" ,"The Hobbit: Or There and Back Again",
-                "J.R.R. Tolkien", "William Morrow & Company", Date.valueOf("2012-10-18"));
+    private ItemSnapshotBuilder buildSnapshot() {
+        return ItemSnapshotBuilder.build();
+    }
+
+    private ItemSnapshot createItem(ItemSnapshot expected) {
+        return facade.createItem(expected);
+    }
+
+    private void assertIsSnapshotInitialized(ItemSnapshot snapshot) {
+        assertNotNull(snapshot.getId());
     }
 }

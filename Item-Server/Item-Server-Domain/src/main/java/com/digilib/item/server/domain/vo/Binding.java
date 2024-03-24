@@ -11,4 +11,8 @@ public enum Binding {
     public String getType() {
         return type;
     }
+
+    public static Binding createFrom(String binding) {
+        return Binding.valueOf(binding.toUpperCase());
+    }
 }

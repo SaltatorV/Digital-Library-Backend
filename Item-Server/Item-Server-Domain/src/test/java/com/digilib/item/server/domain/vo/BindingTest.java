@@ -17,4 +17,16 @@ public class BindingTest {
         //then
         assertEquals("Softcover", name);
     }
+
+    @Test
+    public void shouldCreateBindingFrom() {
+        //given
+        var name = "softcover";
+
+        //when
+        var binding = Binding.createFrom(name);
+
+        //then
+        assertEquals(Binding.SOFTCOVER, binding);
+    }
 }
