@@ -39,6 +39,7 @@
         <spring-doc.version>2.3.0</spring-doc.version>
         <liquibase-core.version>4.26.0</liquibase-core.version>
         <mysql-connector-j.version>8.3.0</mysql-connector-j.version>
+        <lombok.version>1.18.30</lombok.version>
 
         <maven-surefire-plugin.version>3.2.3</maven-surefire-plugin.version>
     </properties>
@@ -114,6 +115,11 @@
                 <groupId>com.mysql</groupId>
                 <artifactId>mysql-connector-j</artifactId>
                 <version>${mysql-connector-j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
             </dependency>
 
         </dependencies>

@@ -31,7 +31,7 @@ class Item extends AggregateRoot<ItemId> {
     }
 
     public ItemSnapshot createSnapshot() {
-        return new ItemSnapshot(getId(), isbn, genre.toString(), title, author, publisher, releaseDate);
+        return new ItemSnapshot(getId().getValue(), isbn, genre.getName(), title, author, publisher, releaseDate);
     }
 
     private static Genre createGenre(String genre) {

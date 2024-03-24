@@ -9,8 +9,8 @@ public abstract class AggregateRoot<ID> {
         this.id = id;
     }
 
-    public String getId() {
-        return id.toString();
+    public ID getId() {
+        return id;
     }
 
     @Override
