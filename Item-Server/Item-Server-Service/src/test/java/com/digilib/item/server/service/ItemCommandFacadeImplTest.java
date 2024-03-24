@@ -41,7 +41,7 @@ public class ItemCommandFacadeImplTest {
 
         doReturn(Optional.empty())
                 .when(itemCommandRepository)
-                .findByISBN(command.getISBN());
+                .findByIsbn(command.getIsbn());
 
         doReturn(snapshot)
                 .when(itemDomainFacade)
@@ -61,7 +61,7 @@ public class ItemCommandFacadeImplTest {
         var snapshot = createInitializedSnapshot(command);
         doReturn(Optional.of(snapshot))
                 .when(itemCommandRepository)
-                .findByISBN(command.getISBN());
+                .findByIsbn(command.getIsbn());
         //when
        assertThrows(ItemAlreadyExistsException.class, () -> itemCommandFacade.createItem(command));
     }
@@ -74,7 +74,7 @@ public class ItemCommandFacadeImplTest {
         var snapshot = createInitializedSnapshot(command);
         doReturn(Optional.of(snapshot))
                 .when(itemCommandRepository)
-                .findByISBN(ISBN);
+                .findByIsbn(ISBN);
 
         //when
         var result = itemCommandFacade.deleteItem(ISBN);
@@ -89,7 +89,7 @@ public class ItemCommandFacadeImplTest {
         var ISBN = createISBN();
         doReturn(Optional.empty())
                 .when(itemCommandRepository)
-                .findByISBN(ISBN);
+                .findByIsbn(ISBN);
 
         //when
         assertThrows(ItemNotFoundException.class, () -> itemCommandFacade.deleteItem(ISBN));
@@ -104,7 +104,7 @@ public class ItemCommandFacadeImplTest {
         var snapshot = createInitializedSnapshot(command2);
         doReturn(Optional.of(snapshot))
                 .when(itemCommandRepository)
-                .findByISBN(ISBN);
+                .findByIsbn(ISBN);
 
         //when
         var result = itemCommandFacade.updateItem(ISBN, command);
@@ -159,7 +159,7 @@ public class ItemCommandFacadeImplTest {
     }
 
     private ItemSnapshot createInitializedSnapshot(CreateItemCommand command) {
-        return new ItemSnapshot(UUID.randomUUID().toString(), command.getISBN(), command.getGenre(),
+        return new ItemSnapshot(UUID.randomUUID().toString(), command.getIsbn(), command.getGenre(),
                 command.getTitle(), command.getAuthor(), command.getReleaseDate());
     }
 }

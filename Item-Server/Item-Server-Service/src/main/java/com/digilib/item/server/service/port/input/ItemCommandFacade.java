@@ -11,7 +11,7 @@ public interface ItemCommandFacade {
 
     MessageResponse deleteItem(String isbn);
 
-    MessageResponse updateItem(String ISBN, UpdateItemCommand command);
+    MessageResponse updateItem(String isbn, UpdateItemCommand command);
 
     MessageResponse createItemDetails(String isbn, CreateItemDetailsCommand command);
 }

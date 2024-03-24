@@ -8,5 +8,5 @@ public interface ItemCommandRepository {
     void save(ItemSnapshot snapshot);
     void delete(String isbn);
     void update(ItemSnapshot snapshot);
-    Optional<ItemSnapshot> findByISBN(String isbn);
+    Optional<ItemSnapshot> findByIsbn(String isbn);
 }

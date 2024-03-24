@@ -7,7 +7,7 @@ import com.digilib.item.server.service.dto.response.ItemSummaryResponse;
 
 public interface ItemQueryFacade {
 
-    ItemResponse findItem(String ISBN);
+    ItemResponse findItem(String isbn);
 
     List<ItemSummaryResponse> fetchItemsSummary();
 }

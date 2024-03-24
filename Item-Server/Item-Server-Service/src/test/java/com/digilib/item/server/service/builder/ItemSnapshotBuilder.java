@@ -1,10 +1,11 @@
-package com.digilib.item.server.domain.builder;
+package com.digilib.item.server.service.builder;
 
 import com.digilib.item.server.domain.vo.ItemSnapshot;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.UUID;
 
 public class ItemSnapshotBuilder {
     private String id;
@@ -23,8 +24,8 @@ public class ItemSnapshotBuilder {
         return new ItemSnapshotBuilder();
     }
 
-    public ItemSnapshotBuilder withId(String id) {
-        this.id = id;
+    public ItemSnapshotBuilder withRandomId() {
+        this.id = UUID.randomUUID().toString();
         return this;
     }
 
@@ -61,6 +62,7 @@ public class ItemSnapshotBuilder {
         }
         return this;
     }
+
 
     public ItemSnapshot create() {
         return new ItemSnapshot(id, isbn, genre, title, author, publisher, releaseDate);

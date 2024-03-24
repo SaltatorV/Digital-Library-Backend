@@ -6,6 +6,6 @@ import java.util.Optional;
 
 public interface ItemQueryRepository {
 
-    Optional<ItemSnapshot> findByISBN(String ISBN);
+    Optional<ItemSnapshot> findByIsbn(String isbn);
 
 }

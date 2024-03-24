@@ -2,6 +2,9 @@ package com.digilib.item.server.service;
 
 import com.digilib.item.server.domain.exception.ItemNotFoundException;
 import com.digilib.item.server.domain.vo.ItemSnapshot;
+import com.digilib.item.server.service.builder.ItemSnapshotBuilder;
+import com.digilib.item.server.service.dto.response.ItemResponse;
+import com.digilib.item.server.service.dto.response.ItemSummaryResponse;
 import com.digilib.item.server.service.port.output.ItemQueryRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -10,9 +13,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 
-import java.sql.Date;
+import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -27,47 +29,68 @@ public class ItemQueryFacadeImplTest {
     private ItemQueryFacadeImpl itemQueryService;
 
     @Test
-    public void shouldReturnItemResponseWithSameISBN() {
+    public void shouldReturnItemResponseWithSameIsbn() {
         //given
-        var snapshot = prepareTheHobbitSnapshot();
-        doReturn(Optional.of(snapshot))
-                .when(itemQueryRepository)
-                .findByISBN(snapshot.getIsbn());
+        var snapshot = buildSnapshot()
+                .withRandomId()
+                .withIsbn("978-0547928227")
+                .withGenre("Fantasy")
+                .withTitle("The Hobbit: Or There and Back Again")
+                .withAuthor("J.R.R. Tolkien")
+                .withPublisher("William Morrow & Company")
+                .withReleaseDateInFormatDDMMYYYY("18102012")
+                .create();
+
+        returnFromRepository(snapshot);
 
         //when
-        var result = itemQueryService.findItem(snapshot.getIsbn());
+        var result = findItem(snapshot.getIsbn());
 
         //then
-        assertEquals(snapshot.getIsbn(), result.getISBN());
+        assertEquals(snapshot.getIsbn(), result.getIsbn());
     }
 
     @Test
     public void shouldThrowExceptionWhenCannotFindItem() {
         //given
-        String ISBN = createTheHobbitISBN();
-        doReturn(Optional.empty())
-                .when(itemQueryRepository)
-                .findByISBN(ISBN);
+        String isbn = "978-0547928227";
+
+        returnEmptyValueFromRepository(isbn);
 
         //when
-        assertThrows(ItemNotFoundException.class, () -> itemQueryService.findItem(ISBN));
+        assertThrows(ItemNotFoundException.class, () -> findItem(isbn));
     }
 
     @Test
     public void shouldReturnListOf3SummaryItems() {
         //when
-        var result = itemQueryService.fetchItemsSummary();
+        var result = fetchSummaryItems(3);
 
         //then
         assertEquals(3, result.size());
     }
 
-    public String createTheHobbitISBN() {
-        return "978-0547928227";
+    private ItemSnapshotBuilder buildSnapshot() {
+        return ItemSnapshotBuilder.build();
     }
 
-    private ItemSnapshot prepareTheHobbitSnapshot() {
-        return new ItemSnapshot(UUID.randomUUID().toString(), "978-0547928227", "The Hobbit: Or There and Back Again", "Fantasy",
-                "J.R.R. Tolkien", "William Morrow & Company", Date.valueOf("2012-10-18"));
+    private void returnFromRepository(ItemSnapshot snapshot) {
+        doReturn(Optional.of(snapshot))
+                .when(itemQueryRepository)
+                .findByIsbn(snapshot.getIsbn());
+    }
+
+    private void returnEmptyValueFromRepository(String isbn) {
+        doReturn(Optional.empty())
+                .when(itemQueryRepository)
+                .findByIsbn(isbn);
+    }
+
+    private ItemResponse findItem(String isbn) {
+        return itemQueryService.findItem(isbn);
+    }
+
+    private List<ItemSummaryResponse> fetchSummaryItems(int size) {
+        return itemQueryService.fetchItemsSummary();
     }
 }

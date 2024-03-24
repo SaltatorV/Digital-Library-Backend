@@ -10,27 +10,24 @@ import com.digilib.item.server.service.dto.command.UpdateItemCommand;
 import com.digilib.item.server.service.dto.response.MessageResponse;
 import com.digilib.item.server.service.port.input.ItemCommandFacade;
 import com.digilib.item.server.service.port.output.ItemCommandRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 class ItemCommandFacadeImpl implements ItemCommandFacade {
 
     private final ItemDomainFacade itemDomainFacade;
     private final ItemCommandRepository repository;
 
-    public ItemCommandFacadeImpl(ItemDomainFacade itemDomainFacade, ItemCommandRepository repository) {
-        this.itemDomainFacade = itemDomainFacade;
-        this.repository = repository;
-    }
-
     @Override
     public MessageResponse createItem(CreateItemCommand command) {
 
-        if(isbnExists(command.getISBN())) {
-            throw new ItemAlreadyExistsException();
+        if(isbnExists(command.getIsbn())) {
+            throw ItemAlreadyExistsException.createForIsbn(command.getIsbn());
         }
 
-        ItemSnapshot snapshot = new ItemSnapshot(command.getISBN(), command.getGenre(), command.getTitle(),
+        ItemSnapshot snapshot = new ItemSnapshot(command.getIsbn(), command.getGenre(), command.getTitle(),
                 command.getAuthor(), command.getPublisher(), command.getReleaseDate());
 
         ItemSnapshot initializedSnapshot = itemDomainFacade.createItem(snapshot);
@@ -39,23 +36,23 @@ class ItemCommandFacadeImpl implements ItemCommandFacade {
     }
 
     @Override
-    public MessageResponse deleteItem(String ISBN) {
-        if(isbnNotExists(ISBN)) {
-            throw new ItemNotFoundException();
+    public MessageResponse deleteItem(String isbn) {
+        if(isbnNotExists(isbn)) {
+            throw ItemNotFoundException.createForIsbn(isbn);
         }
 
-        repository.delete(ISBN);
+        repository.delete(isbn);
         return MessageResponse.create("Item successfully deleted!");
     }
 
     @Override
-    public MessageResponse updateItem(String ISBN, UpdateItemCommand command) {
+    public MessageResponse updateItem(String isbn, UpdateItemCommand command) {
 
-        if(isbnNotExists(ISBN)) {
-            throw new ItemNotFoundException();
+        if(isbnNotExists(isbn)) {
+            throw ItemNotFoundException.createForIsbn(isbn);
         }
 
-        ItemSnapshot snapshot = new ItemSnapshot(ISBN, command.getGenre(), command.getTitle(),
+        ItemSnapshot snapshot = new ItemSnapshot(isbn, command.getGenre(), command.getTitle(),
                 command.getAuthor(), command.getPublisher(), command.getReleaseDate());
 
         repository.update(snapshot);
@@ -68,11 +65,11 @@ class ItemCommandFacadeImpl implements ItemCommandFacade {
         return MessageResponse.create("Item details successfully bounded!");
     }
 
-    private boolean isbnExists(String ISBN) {
-        return repository.findByISBN(ISBN).isPresent();
+    private boolean isbnExists(String isbn) {
+        return repository.findByIsbn(isbn).isPresent();
     }
 
-    private boolean isbnNotExists(String ISBN) {
-        return repository.findByISBN(ISBN).isEmpty();
+    private boolean isbnNotExists(String isbn) {
+        return repository.findByIsbn(isbn).isEmpty();
     }
 }

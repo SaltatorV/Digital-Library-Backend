@@ -6,26 +6,24 @@ import com.digilib.item.server.service.dto.response.ItemResponse;
 import com.digilib.item.server.service.dto.response.ItemSummaryResponse;
 import com.digilib.item.server.service.port.input.ItemQueryFacade;
 import com.digilib.item.server.service.port.output.ItemQueryRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 class ItemQueryFacadeImpl implements ItemQueryFacade {
 
     private final ItemQueryRepository itemQueryRepository;
 
-    public ItemQueryFacadeImpl(ItemQueryRepository itemQueryRepository) {
-        this.itemQueryRepository = itemQueryRepository;
-    }
-
     @Override
-    public ItemResponse findItem(String ISBN) {
-        Optional<ItemSnapshot> snapshot = itemQueryRepository.findByISBN(ISBN);
+    public ItemResponse findItem(String isbn) {
+        Optional<ItemSnapshot> snapshot = itemQueryRepository.findByIsbn(isbn);
 
         if(snapshot.isEmpty()) {
-            throw new ItemNotFoundException();
+            throw ItemNotFoundException.createForIsbn(isbn);
         }
 
         return ItemResponse.create(snapshot.get().getIsbn());

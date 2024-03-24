@@ -1,17 +1,14 @@
 package com.digilib.item.server.service.dto.response;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
+@Getter
+@RequiredArgsConstructor
 public class ItemResponse {
-    private final String ISBN;
+    private final String isbn;
 
-    private ItemResponse(String ISBN) {
-        this.ISBN = ISBN;
-    }
-
-    public static  ItemResponse create(String ISBN) {
-        return new ItemResponse(ISBN);
-    }
-
-    public String getISBN() {
-        return ISBN;
+    public static  ItemResponse create(String isbn) {
+        return new ItemResponse(isbn);
     }
 }
