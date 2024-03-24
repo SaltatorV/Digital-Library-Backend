@@ -19,18 +19,18 @@ public class ItemCommandController {
         return itemCommandFacade.createItem(command);
     }
 
-    @DeleteMapping("{ISBN}")
-    public MessageResponse deleteItem(@PathVariable String ISBN) {
-        return itemCommandFacade.deleteItem(ISBN);
+    @DeleteMapping("{isbn}")
+    public MessageResponse deleteItem(@PathVariable String isbn) {
+        return itemCommandFacade.deleteItem(isbn);
     }
 
-    @PatchMapping("{ISBN}")
-    public MessageResponse updateItem(@PathVariable String ISBN, @RequestBody UpdateItemCommand command) {
-        return itemCommandFacade.updateItem(ISBN, command);
+    @PatchMapping("{isbn}")
+    public MessageResponse updateItem(@PathVariable String isbn, @RequestBody UpdateItemCommand command) {
+        return itemCommandFacade.updateItem(isbn, command);
     }
 
-    @PostMapping("{ISBN}/details")
-    public MessageResponse createItemDetails(@PathVariable String ISBN, @RequestBody CreateItemDetailsCommand command) {
-        return itemCommandFacade.createItemDetails(ISBN, command);
+    @PostMapping("{isbn}/details")
+    public MessageResponse createItemDetails(@PathVariable String isbn, @RequestBody CreateItemDetailsCommand command) {
+        return itemCommandFacade.createItemDetails(isbn, command);
     }
 }

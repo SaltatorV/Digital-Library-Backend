@@ -13,9 +13,9 @@ public class ItemQueryRepositoryImpl implements ItemQueryRepository {
     private final Database db;
 
     @Override
-    public Optional<ItemSnapshot> findByISBN(String ISBN) {
+    public Optional<ItemSnapshot> findByIsbn(String isbn) {
         return db.snapshots.stream()
-                .filter(snapshot -> snapshot.getIsbn().equals(ISBN))
+                .filter(snapshot -> snapshot.getIsbn().equals(isbn))
                 .findFirst();
     }
 }

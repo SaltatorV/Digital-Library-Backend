@@ -7,7 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class CreateItemCommandBuilder {
-    private String ISBN;
+    private String isbn;
     private String genre;
     private String title;
     private String author;
@@ -21,8 +21,8 @@ public class CreateItemCommandBuilder {
         return new CreateItemCommandBuilder();
     }
 
-    public CreateItemCommandBuilder withISBN(String ISBN) {
-        this.ISBN = ISBN;
+    public CreateItemCommandBuilder withIsbn(String isbn) {
+        this.isbn = isbn;
         return this;
     }
 
@@ -56,6 +56,6 @@ public class CreateItemCommandBuilder {
     }
 
     public CreateItemCommand create() {
-        return new CreateItemCommand(this.ISBN, this.genre, this.title, this.author, this.publisher, this.releaseDate);
+        return new CreateItemCommand(this.isbn, this.genre, this.title, this.author, this.publisher, this.releaseDate);
     }
 }

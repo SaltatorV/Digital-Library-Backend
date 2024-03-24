@@ -8,7 +8,7 @@ import java.util.Date;
 
 public class ItemSnapshotBuilder {
     private String id;
-    private String ISBN;
+    private String isbn;
     private String genre;
     private String title;
     private String author;
@@ -28,8 +28,8 @@ public class ItemSnapshotBuilder {
         return this;
     }
 
-    public ItemSnapshotBuilder withISBN(String ISBN) {
-        this.ISBN = ISBN;
+    public ItemSnapshotBuilder withIsbn(String isbn) {
+        this.isbn = isbn;
         return this;
     }
 
@@ -64,6 +64,6 @@ public class ItemSnapshotBuilder {
 
 
     public ItemSnapshot create() {
-        return new ItemSnapshot(id, ISBN, genre, title, author, publisher, releaseDate);
+        return new ItemSnapshot(id, isbn, genre, title, author, publisher, releaseDate);
     }
 }

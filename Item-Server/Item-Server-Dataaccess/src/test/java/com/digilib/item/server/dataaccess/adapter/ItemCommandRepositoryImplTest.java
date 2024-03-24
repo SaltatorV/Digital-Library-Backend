@@ -25,7 +25,7 @@ public class ItemCommandRepositoryImplTest {
         //given
         var snapshot = buildSnapshot()
                 .withId(UUID.randomUUID().toString())
-                .withISBN("978-0547928227")
+                .withIsbn("978-0547928227")
                 .withGenre("Fantasy")
                 .withTitle("The Hobbit: Or There and Back Again")
                 .withAuthor("J.R.R. Tolkien")
@@ -46,7 +46,7 @@ public class ItemCommandRepositoryImplTest {
         //given
         var snapshot = buildSnapshot()
                 .withId(UUID.randomUUID().toString())
-                .withISBN("978-0547928227")
+                .withIsbn("978-0547928227")
                 .withGenre("Fantasy")
                 .withTitle("The Hobbit: Or There and Back Again")
                 .withAuthor("J.R.R. Tolkien")
@@ -68,7 +68,7 @@ public class ItemCommandRepositoryImplTest {
         //given
         var oldSnapshot = buildSnapshot()
                 .withId(UUID.randomUUID().toString())
-                .withISBN("978-0547928227")
+                .withIsbn("978-0547928227")
                 .withGenre("Typo")
                 .withTitle("The Hobbit: Or There and Back Again")
                 .withAuthor("J.R.R. Tolkien")
@@ -80,7 +80,7 @@ public class ItemCommandRepositoryImplTest {
 
         var newSnapshot = buildSnapshot()
                 .withId(UUID.randomUUID().toString())
-                .withISBN("978-0547928227")
+                .withIsbn("978-0547928227")
                 .withGenre("Fantasy")
                 .withTitle("The Hobbit: Or There and Back Again")
                 .withAuthor("J.R.R. Tolkien")
@@ -97,11 +97,11 @@ public class ItemCommandRepositoryImplTest {
     }
 
     @Test
-    public void shouldFindSnapshotByISBN() {
+    public void shouldFindSnapshotByIsbn() {
         //given
         var snapshot = buildSnapshot()
                 .withId(UUID.randomUUID().toString())
-                .withISBN("978-0547928227")
+                .withIsbn("978-0547928227")
                 .withGenre("Fantasy")
                 .withTitle("The Hobbit: Or There and Back Again")
                 .withAuthor("J.R.R. Tolkien")
@@ -119,7 +119,7 @@ public class ItemCommandRepositoryImplTest {
     }
 
     @Test
-    public void shouldNotFindSnapshotByISBN() {
+    public void shouldNotFindSnapshotByIsbn() {
         //given
 
         //when
@@ -136,15 +136,15 @@ public class ItemCommandRepositoryImplTest {
     private void saveSnapshot(ItemSnapshot snapshot) {
         repository.save(snapshot);
     }
-    private void deleteSnapshot(String ISBN) {
-        repository.delete(ISBN);
+    private void deleteSnapshot(String isbn) {
+        repository.delete(isbn);
     }
     private void updateSnapshot(ItemSnapshot snapshot) {
         repository.update(snapshot);
     }
 
-    private Optional<ItemSnapshot> findSnapshot(String ISBN) {
-        return repository.findByISBN(ISBN);
+    private Optional<ItemSnapshot> findSnapshot(String isbn) {
+        return repository.findByIsbn(isbn);
     }
 
     private void assertSnapshotExists(ItemSnapshot snapshot) {

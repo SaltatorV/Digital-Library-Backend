@@ -18,9 +18,9 @@ public class ItemQueryController {
 
     private final ItemQueryFacade itemQueryFacade;
 
-    @GetMapping("{ISBN}")
-    ItemResponse findItem(@PathVariable String ISBN) {
-        return itemQueryFacade.findItem(ISBN);
+    @GetMapping("{isbn}")
+    ItemResponse findItem(@PathVariable String isbn) {
+        return itemQueryFacade.findItem(isbn);
     }
 
     @GetMapping

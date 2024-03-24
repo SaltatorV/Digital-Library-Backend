@@ -24,11 +24,11 @@ public class ItemQueryRepositoryImplTest {
     }
 
     @Test
-    public void shouldFindByISBN() {
+    public void shouldFindByIsbn() {
         //given
         var toSave = buildSnapshot()
                 .withId(UUID.randomUUID().toString())
-                .withISBN("978-0547928227")
+                .withIsbn("978-0547928227")
                 .withGenre("Fantasy")
                 .withTitle("The Hobbit: Or There and Back Again")
                 .withAuthor("J.R.R. Tolkien")
@@ -46,7 +46,7 @@ public class ItemQueryRepositoryImplTest {
     }
 
     @Test
-    public void shouldReturnEmptyWhenFindByISBN() {
+    public void shouldReturnEmptyWhenFindByIsbn() {
         //given
 
         //when
@@ -64,8 +64,8 @@ public class ItemQueryRepositoryImplTest {
         db.snapshots.add(snapshot);
     }
 
-    private Optional<ItemSnapshot> findSnapshot(String ISBN) {
-        return repository.findByISBN(ISBN);
+    private Optional<ItemSnapshot> findSnapshot(String isbn) {
+        return repository.findByIsbn(isbn);
     }
 
     private void assertSnapshotsAreEqual(ItemSnapshot expected, Optional<ItemSnapshot> actual) {

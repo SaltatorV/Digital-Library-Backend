@@ -29,7 +29,7 @@ public class ItemCommandControllerTest {
     public void shouldSaveNewItem() {
         //given
         var command = buildCreateItemCommand()
-                .withISBN("978-0547928227")
+                .withIsbn("978-0547928227")
                 .withGenre("Fantasy")
                 .withTitle("The Hobbit: Or There and Back Again")
                 .withAuthor("J.R.R. Tolkien")
@@ -50,12 +50,12 @@ public class ItemCommandControllerTest {
     @Test
     public void shouldDeleteItem() {
         //given
-        var ISBN = "978-0547928227";
+        var isbn = "978-0547928227";
 
-        returnMessageFromFacade("Item successfully deleted!", ISBN);
+        returnMessageFromFacade("Item successfully deleted!", isbn);
 
         //when
-        var response = deleteItem(ISBN);
+        var response = deleteItem(isbn);
 
         //then
         assertResponseMessageIs(response, "Item successfully deleted!");
@@ -65,7 +65,7 @@ public class ItemCommandControllerTest {
     public void shouldUpdateItem() {
 
         //given
-        var ISBN = "978-0547928227";
+        var isbn = "978-0547928227";
         var command = buildUpdateItemCommand()
                 .withGenre("Fantasy")
                 .withTitle("The Hobbit: Or There and Back Again")
@@ -74,10 +74,10 @@ public class ItemCommandControllerTest {
                 .withReleaseDateInFormatDDMMYYYY("18102012")
                 .create();
 
-        returnMessageFromFacade("Item successfully updated!", ISBN, command);
+        returnMessageFromFacade("Item successfully updated!", isbn, command);
 
         //when
-        var response = updateItem(ISBN, command);
+        var response = updateItem(isbn, command);
 
         //then
         assertResponseMessageIs(response, "Item successfully updated!");
@@ -86,7 +86,7 @@ public class ItemCommandControllerTest {
     @Test
     public void shouldCreateItemDetails() {
         //given
-        var ISBN = "978-0547928227";
+        var isbn = "978-0547928227";
         var command = buildCreateItemDetailsCommand()
                 .withQuantity(1)
                 .withDefaultImg()
@@ -95,11 +95,11 @@ public class ItemCommandControllerTest {
                 .withThickness(30)
                 .create();
 
-        returnMessageFromFacade("Item details successfully bounded!", ISBN, command);
+        returnMessageFromFacade("Item details successfully bounded!", isbn, command);
 
 
         //when
-        var response = createItemDetails(ISBN, command);
+        var response = createItemDetails(isbn, command);
 
         //then
         assertResponseMessageIs(response, "Item details successfully bounded!");
@@ -109,16 +109,16 @@ public class ItemCommandControllerTest {
         return itemCommandController.saveItem(command);
     }
 
-    private MessageResponse deleteItem(String ISBN) {
-        return itemCommandController.deleteItem(ISBN);
+    private MessageResponse deleteItem(String isbn) {
+        return itemCommandController.deleteItem(isbn);
     }
 
-    private MessageResponse updateItem(String ISBN, UpdateItemCommand command){
-        return itemCommandController.updateItem(ISBN, command);
+    private MessageResponse updateItem(String isbn, UpdateItemCommand command){
+        return itemCommandController.updateItem(isbn, command);
     }
 
-    private MessageResponse createItemDetails(String ISBN, CreateItemDetailsCommand command){
-        return itemCommandController.createItemDetails(ISBN, command);
+    private MessageResponse createItemDetails(String isbn, CreateItemDetailsCommand command){
+        return itemCommandController.createItemDetails(isbn, command);
     }
 
     private CreateItemCommandBuilder buildCreateItemCommand(){
@@ -139,22 +139,22 @@ public class ItemCommandControllerTest {
                 .createItem(command);
     }
 
-    private void returnMessageFromFacade(String message, String ISBN) {
+    private void returnMessageFromFacade(String message, String isbn) {
         doReturn(createResponseWithMessage(message))
                 .when(itemCommandFacade)
-                .deleteItem(ISBN);;
+                .deleteItem(isbn);;
     }
 
-    private void returnMessageFromFacade(String message, String ISBN, UpdateItemCommand command) {
+    private void returnMessageFromFacade(String message, String isbn, UpdateItemCommand command) {
         doReturn(createResponseWithMessage(message))
                 .when(itemCommandFacade)
-                .updateItem(ISBN, command);
+                .updateItem(isbn, command);
     }
 
-    private void returnMessageFromFacade(String message, String ISBN, CreateItemDetailsCommand command) {
+    private void returnMessageFromFacade(String message, String isbn, CreateItemDetailsCommand command) {
         doReturn(createResponseWithMessage(message))
                 .when(itemCommandFacade)
-                .createItemDetails(ISBN, command);
+                .createItemDetails(isbn, command);
     }
 
     private MessageResponse createResponseWithMessage(String message) {

@@ -24,17 +24,17 @@ public class ItemQueryControllerTest {
     private ItemQueryController itemQueryController;
 
     @Test
-    public void shouldReturnSameISBN() {
+    public void shouldReturnSameIsbn() {
         //given
-        var ISBN = "978-0547928227";
+        var isbn = "978-0547928227";
 
-        returnItemResponseWhenGetISBN(ISBN);
+        returnItemResponseWhenGetIsbn(isbn);
 
         //when
-        var response = findItem(ISBN);
+        var response = findItem(isbn);
 
         //then
-        assertISBNEquals(ISBN, response);
+        assertIsbnEquals(isbn, response);
     }
 
     @Test
@@ -49,10 +49,10 @@ public class ItemQueryControllerTest {
         assertItemsSummarySizeIs(3, response);
     }
 
-    private void returnItemResponseWhenGetISBN(String ISBN) {
-        doReturn(createItemResponse(ISBN))
+    private void returnItemResponseWhenGetIsbn(String isbn) {
+        doReturn(createItemResponse(isbn))
                 .when(itemQueryFacade)
-                .findItem(ISBN);
+                .findItem(isbn);
     }
 
     private void returnSummaryItems() {
@@ -62,24 +62,24 @@ public class ItemQueryControllerTest {
                 .fetchItemsSummary();
     }
 
-    private ItemResponse findItem(String ISBN) {
-        return itemQueryController.findItem(ISBN);
+    private ItemResponse findItem(String isbn) {
+        return itemQueryController.findItem(isbn);
     }
 
     private List<ItemSummaryResponse> findItemsSummary() {
         return itemQueryController.findItemsSummary();
     }
 
-    private ItemResponse createItemResponse(String ISBN) {
-        return ItemResponse.create(ISBN);
+    private ItemResponse createItemResponse(String isbn) {
+        return ItemResponse.create(isbn);
     }
 
-    private void assertISBNEquals(String ISBN, ItemResponse response) {
-        assertEquals(ISBN, response.getISBN());
+    private void assertIsbnEquals(String isbn, ItemResponse response) {
+        assertEquals(isbn, response.getIsbn());
     }
 
     private void assertItemsSummarySizeIs(int size, List<ItemSummaryResponse> response) {
-        assertEquals(3, response.size());
+        assertEquals(size, response.size());
     }
 
     private List<ItemSummaryResponse> createSummaryWith3Items() {

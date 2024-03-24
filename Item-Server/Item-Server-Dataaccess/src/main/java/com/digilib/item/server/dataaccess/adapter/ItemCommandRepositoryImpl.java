@@ -35,7 +35,7 @@ public class ItemCommandRepositoryImpl implements ItemCommandRepository {
     }
 
     @Override
-    public Optional<ItemSnapshot> findByISBN(String ISBN) {
-        return db.snapshots.stream().filter(snapshot -> snapshot.getIsbn().equals(ISBN)).findFirst();
+    public Optional<ItemSnapshot> findByIsbn(String isbn) {
+        return db.snapshots.stream().filter(snapshot -> snapshot.getIsbn().equals(isbn)).findFirst();
     }
 }
