@@ -2,18 +2,16 @@ package com.digilib.item.server.dataaccess.adapter;
 
 import com.digilib.item.server.domain.vo.ItemSnapshot;
 import com.digilib.item.server.service.port.output.ItemCommandRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
 @Service
+@RequiredArgsConstructor
 public class ItemCommandRepositoryImpl implements ItemCommandRepository {
 
-    Database db;
-
-    public ItemCommandRepositoryImpl(Database db) {
-        this.db = db;
-    }
+    private final Database db;
 
     @Override
     public void save(ItemSnapshot snapshot) {
