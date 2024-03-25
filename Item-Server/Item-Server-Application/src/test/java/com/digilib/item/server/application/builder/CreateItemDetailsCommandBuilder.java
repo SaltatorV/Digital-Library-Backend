@@ -4,7 +4,7 @@ import com.digilib.item.server.service.dto.command.CreateItemDetailsCommand;
 
 public class CreateItemDetailsCommandBuilder {
     private int quantity;
-    private byte[] img;
+    private String imgLink;
     private double width;
     private double height;
     private double thickness;
@@ -21,8 +21,8 @@ public class CreateItemDetailsCommandBuilder {
         return this;
     }
 
-    public CreateItemDetailsCommandBuilder withDefaultImg() {
-        this.img = new byte[]{0, 1, 0, 1, 1, 1, 1};
+    public CreateItemDetailsCommandBuilder withImgLink(String imgLink) {
+        this.imgLink = imgLink;
         return this;
     }
 
@@ -42,6 +42,6 @@ public class CreateItemDetailsCommandBuilder {
     }
 
     public CreateItemDetailsCommand create() {
-        return new CreateItemDetailsCommand(this.quantity, this.img, this.width, this.height, this.thickness);
+        return new CreateItemDetailsCommand(this.quantity, this.imgLink, this.width, this.height, this.thickness);
     }
 }

@@ -89,7 +89,7 @@ public class ItemCommandControllerTest {
         var isbn = "978-0547928227";
         var command = buildCreateItemDetailsCommand()
                 .withQuantity(1)
-                .withDefaultImg()
+                .withImgLink("example.com")
                 .withWidth(145)
                 .withHeight(220)
                 .withThickness(30)
