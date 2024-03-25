@@ -3,10 +3,15 @@ package com.digilib.item.server.service;
 import com.digilib.item.server.domain.ItemDomainFacade;
 import com.digilib.item.server.domain.exception.ItemAlreadyExistsException;
 import com.digilib.item.server.domain.exception.ItemNotFoundException;
+import com.digilib.item.server.domain.vo.Genre;
 import com.digilib.item.server.domain.vo.ItemSnapshot;
+import com.digilib.item.server.service.builder.CreateItemCommandBuilder;
+import com.digilib.item.server.service.builder.CreateItemDetailsCommandBuilder;
+import com.digilib.item.server.service.builder.UpdateItemCommandBuilder;
 import com.digilib.item.server.service.dto.command.CreateItemCommand;
 import com.digilib.item.server.service.dto.command.CreateItemDetailsCommand;
 import com.digilib.item.server.service.dto.command.UpdateItemCommand;
+import com.digilib.item.server.service.dto.response.MessageResponse;
 import com.digilib.item.server.service.port.output.ItemCommandRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,7 +19,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.sql.Date;
+import java.time.Instant;
+import java.util.Date;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -36,130 +42,215 @@ public class ItemCommandFacadeImplTest {
     @Test
     public void shouldCreateNewItem() {
         //given
-        var command = prepareAddTheHobbitCommand();
-        var snapshot = createInitializedSnapshot(command);
-
-        doReturn(Optional.empty())
-                .when(itemCommandRepository)
-                .findByIsbn(command.getIsbn());
-
-        doReturn(snapshot)
-                .when(itemDomainFacade)
-                .createItem(any());
-
+        var command = CreateItemCommandBuilder.build()
+                .withIsbn("978-0547928227")
+                .withGenre("Fantasy")
+                .withTitle("The Hobbit: Or There and Back Again")
+                .withAuthor("J.R.R. Tolkien")
+                .withPublisher("William Morrow & Company")
+                .withReleaseDateInFormatDDMMYYYY("18102012")
+                .create();
+        
+        
+        returnEmptyWhenCheckIsbnExists(command.getIsbn());
+        returnInitializedSnapshotFromDomain(command);
+        
         //when
-        var result = itemCommandFacade.createItem(command);
+        var result = createItem(command);
 
         //then
-        assertEquals("Item successfully created!", result.getMessage());
+        assertMessageIsSuccessfullyCreated(result);
     }
 
     @Test
     public void shouldThrowItemAlreadyExistsExceptionWhenCreateItem() {
         //given
-        var command = prepareAddTheHobbitCommand();
-        var snapshot = createInitializedSnapshot(command);
-        doReturn(Optional.of(snapshot))
-                .when(itemCommandRepository)
-                .findByIsbn(command.getIsbn());
+        var command = CreateItemCommandBuilder.build()
+                .withIsbn("978-0547928227")
+                .withGenre("Fantasy")
+                .withTitle("The Hobbit: Or There and Back Again")
+                .withAuthor("J.R.R. Tolkien")
+                .withPublisher("William Morrow & Company")
+                .withReleaseDateInFormatDDMMYYYY("18102012")
+                .create();
+
+        returnSnapshotWhenCheckIsbnExists(command);
+
         //when
-       assertThrows(ItemAlreadyExistsException.class, () -> itemCommandFacade.createItem(command));
+        assertThrowsItemAlreadyExistsExceptionWhenCreateItem(command);
     }
 
     @Test
     public void shouldDeleteItem() {
         //given
-        var ISBN = createISBN();
-        var command = prepareAddTheHobbitCommand();
-        var snapshot = createInitializedSnapshot(command);
-        doReturn(Optional.of(snapshot))
-                .when(itemCommandRepository)
-                .findByIsbn(ISBN);
+        var isbn = "0-061-96436-0";
+
+        returnSnapshotWhenCheckIsbnExists(isbn);
 
         //when
-        var result = itemCommandFacade.deleteItem(ISBN);
+        var result = deleteItem(isbn);
 
         //then
-        assertEquals("Item successfully deleted!", result.getMessage());
+        assertMessageIsSuccessfullyDeleted(result);
     }
 
     @Test
     public void shouldThrowItemNotFoundExceptionWhenDeleteItem() {
         //given
-        var ISBN = createISBN();
-        doReturn(Optional.empty())
-                .when(itemCommandRepository)
-                .findByIsbn(ISBN);
+        var isbn = "0-061-96436-0";
+
+        returnEmptyWhenCheckIsbnExists(isbn);
 
         //when
-        assertThrows(ItemNotFoundException.class, () -> itemCommandFacade.deleteItem(ISBN));
+        assertThrowsItemNotFoundExceptionWhenDeleteItem(isbn);
     }
 
     @Test
     public void shouldUpdateItem() {
         //given
-        var ISBN = createISBN();
-        var command = prepareUpdateTheHobbitCommand();
-        var command2 = prepareAddTheHobbitCommand();
-        var snapshot = createInitializedSnapshot(command2);
-        doReturn(Optional.of(snapshot))
-                .when(itemCommandRepository)
-                .findByIsbn(ISBN);
+        var isbn = "978-0547928227";
+
+        var updateCommand = UpdateItemCommandBuilder.build()
+                .withGenre("Fantasy")
+                .withTitle("The Hobbit: Or There and Back Again")
+                .withAuthor("J.R.R. Tolkien")
+                .withPublisher("William Morrow & Company")
+                .withReleaseDateInFormatDDMMYYYY("18102012")
+                .create();
+
+        var createItemCommand = CreateItemCommandBuilder.build()
+                .withIsbn("978-0547928227")
+                .withGenre("Fantasy")
+                .withTitle("The")
+                .withAuthor("J.R.R. Tolkien")
+                .withPublisher("William Morrow & Company")
+                .withReleaseDateInFormatDDMMYYYY("18102012")
+                .create();
+
+        returnSnapshotWhenCheckIsbnExists(createItemCommand);
 
         //when
-        var result = itemCommandFacade.updateItem(ISBN, command);
+        var result = updateItem(isbn, updateCommand);
 
         //then
-        assertEquals("Item successfully updated!", result.getMessage());
+        assertMessageIsSuccessfullyUpdated(result);
     }
 
     @Test
     public void shouldThrowItemNotFoundExceptionWhenUpdateItem() {
         //given
-        var ISBN = createISBN();
-        var command = prepareUpdateTheHobbitCommand();
+        var isbn = "978-0547928227";
+
+        var updateCommand = UpdateItemCommandBuilder.build()
+                .withGenre("Fantasy")
+                .withTitle("The Hobbit: Or There and Back Again")
+                .withAuthor("J.R.R. Tolkien")
+                .withPublisher("William Morrow & Company")
+                .withReleaseDateInFormatDDMMYYYY("18102012")
+                .create();
+
+        returnEmptyWhenCheckIsbnExists(isbn);
+
+
         //when
-        assertThrows(ItemNotFoundException.class, () -> itemCommandFacade.updateItem(ISBN, command));
+        assertThrowsItemNotFoundExceptionWhenUpdateItem(isbn, updateCommand);
     }
 
     @Test
     public void shouldCreateItemDetails() {
         //given
-        var ISBN = createISBN();
-        var command = prepareItemDetails();
+        var isbn = "0-061-96436-0";
+        var command = CreateItemDetailsCommandBuilder.build()
+                .withQuantity(5)
+                .withImgLink("example.com")
+                .withHeight(100)
+                .withThickness(40)
+                .withWidth(80)
+                .create();
 
         //when
-        var result = itemCommandFacade.createItemDetails(ISBN, command);
+        var result = createItemDetails(isbn, command);
 
         //then
-        assertEquals("Item details successfully bounded!", result.getMessage());
+        assertMessageIsSuccessfullyBounded(result);
     }
 
-    private CreateItemCommand prepareAddTheHobbitCommand() {
-        return new CreateItemCommand("978-0547928227","Fantasy" ,"The Hobbit: Or There and Back Again",
-                "J.R.R. Tolkien", "William Morrow & Company" ,Date.valueOf("2012-10-18"));
-    }
-    private UpdateItemCommand prepareUpdateTheHobbitCommand() {
-        return new UpdateItemCommand("The Hobbit: Or There and Back Again", "Fantasy",
-                "J.R.R. Tolkien", "William Morrow & Company", Date.valueOf("2012-10-18"));
+    private void returnEmptyWhenCheckIsbnExists(String isbn) {
+        doReturn(Optional.empty())
+                .when(itemCommandRepository)
+                .findByIsbn(isbn);
     }
 
-    public String createISBN() {
-        return "0-061-96436-0";
+
+    private void returnSnapshotWhenCheckIsbnExists(CreateItemCommand command) {
+        doReturn(Optional.of(createInitializedSnapshot(command)))
+                .when(itemCommandRepository)
+                .findByIsbn(command.getIsbn());
     }
 
-    private CreateItemDetailsCommand prepareItemDetails() {
-        int quantity = 1;
-        byte[] img = {0,1,0,1,1,1,1};
-        double widthInMM = 133.4;
-        double heightInMM = 215.9;
-        double thicknessInMM = 25.4;
+    private void returnSnapshotWhenCheckIsbnExists(String isbn) {
+        doReturn(Optional.of(createRandomSnapshot(isbn)))
+                .when(itemCommandRepository)
+                .findByIsbn(isbn);
+    }
 
-        return new CreateItemDetailsCommand(quantity, img, widthInMM, heightInMM, thicknessInMM);
+    private void returnInitializedSnapshotFromDomain(CreateItemCommand command) {
+        doReturn(createInitializedSnapshot(command))
+                .when(itemDomainFacade)
+                .createItem(any());
     }
 
     private ItemSnapshot createInitializedSnapshot(CreateItemCommand command) {
         return new ItemSnapshot(UUID.randomUUID().toString(), command.getIsbn(), command.getGenre(),
-                command.getTitle(), command.getAuthor(), command.getReleaseDate());
+                command.getTitle(), command.getAuthor(), command.getPublisher(), command.getReleaseDate());
+    }
+
+    private ItemSnapshot createRandomSnapshot(String isbn) {
+        return new ItemSnapshot(UUID.randomUUID().toString(), isbn, Genre.BIOGRAPHY.getName(),
+                "Title", "Author", "Publisher", Date.from(Instant.now()));
+    }
+
+    private MessageResponse createItem(CreateItemCommand command) {
+        return itemCommandFacade.createItem(command);
+    }
+
+    private MessageResponse deleteItem(String isbn) {
+        return itemCommandFacade.deleteItem(isbn);
+    }
+
+    private MessageResponse updateItem(String isbn, UpdateItemCommand updateCommand) {
+        return itemCommandFacade.updateItem(isbn, updateCommand);
+    }
+
+    private MessageResponse createItemDetails(String isbn, CreateItemDetailsCommand command) {
+        return itemCommandFacade.createItemDetails(isbn, command);
+    }
+
+    private void assertMessageIsSuccessfullyCreated(MessageResponse result) {
+        assertEquals("Item successfully created!", result.getMessage());
+    }
+
+    private void assertMessageIsSuccessfullyDeleted(MessageResponse result) {
+        assertEquals("Item successfully deleted!", result.getMessage());
+    }
+
+    private void assertMessageIsSuccessfullyUpdated(MessageResponse result) {
+        assertEquals("Item successfully updated!", result.getMessage());
+    }
+
+    private void assertMessageIsSuccessfullyBounded(MessageResponse result) {
+        assertEquals("Item details successfully bounded!", result.getMessage());
+    }
+
+    private void assertThrowsItemAlreadyExistsExceptionWhenCreateItem(CreateItemCommand command) {
+        assertThrows(ItemAlreadyExistsException.class, () -> itemCommandFacade.createItem(command));
+    }
+
+    private void assertThrowsItemNotFoundExceptionWhenDeleteItem(String isbn) {
+        assertThrows(ItemNotFoundException.class, () -> itemCommandFacade.deleteItem(isbn));
+    }
+
+    private void assertThrowsItemNotFoundExceptionWhenUpdateItem(String isbn, UpdateItemCommand updateCommand) {
+        assertThrows(ItemNotFoundException.class, () -> itemCommandFacade.updateItem(isbn, updateCommand));
     }
 }

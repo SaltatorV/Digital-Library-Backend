@@ -47,7 +47,7 @@ public class ItemQueryFacadeImplTest {
         var result = findItem(snapshot.getIsbn());
 
         //then
-        assertEquals(snapshot.getIsbn(), result.getIsbn());
+        assertIsbnsAreEqual(snapshot.getIsbn(), result.getIsbn());
     }
 
     @Test
@@ -58,7 +58,7 @@ public class ItemQueryFacadeImplTest {
         returnEmptyValueFromRepository(isbn);
 
         //when
-        assertThrows(ItemNotFoundException.class, () -> findItem(isbn));
+        assertThrowsItemNotFoundException(isbn);
     }
 
     @Test
@@ -67,7 +67,7 @@ public class ItemQueryFacadeImplTest {
         var result = fetchSummaryItems(3);
 
         //then
-        assertEquals(3, result.size());
+        assertResultSizeIs(result, 3);
     }
 
     private ItemSnapshotBuilder buildSnapshot() {
@@ -92,5 +92,17 @@ public class ItemQueryFacadeImplTest {
 
     private List<ItemSummaryResponse> fetchSummaryItems(int size) {
         return itemQueryService.fetchItemsSummary();
+    }
+
+    private void assertIsbnsAreEqual(String expected, String actual) {
+        assertEquals(expected, actual);
+    }
+
+    private void assertThrowsItemNotFoundException(String isbn) {
+        assertThrows(ItemNotFoundException.class, () -> findItem(isbn));
+    }
+
+    private void assertResultSizeIs(List<ItemSummaryResponse> result, int size) {
+        assertEquals(size, result.size());
     }
 }

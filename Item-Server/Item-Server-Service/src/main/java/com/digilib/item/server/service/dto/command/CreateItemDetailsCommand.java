@@ -7,7 +7,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public class CreateItemDetailsCommand {
     private int quantity;
-    private byte[] img;
+    private String imgLink;
     private double width;
     private double height;
     private double thickness;
